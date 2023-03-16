@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
   },
   head1: {
     fontSize: titles.title1,
-    color: colors.text1,
+    color: colors.mtg,
     textAlign: "center",
     marginVertical: 10,
   },
@@ -365,12 +365,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   or: {
-    color: colors.text1,
+    color: colors.mtg,
     marginVertical: 10,
     fontWeight: "bold",
   },
   gftxt: {
-    color: colors.text2,
+    color: colors.mtg,
     marginBottom: 10,
     fontSize: 25,
   },
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   },
   errormsg: {
     color: "red",
-    fontSize: 18,
+    fontSize: 10,
     textAlign: "center",
     marginTop: 10,
     borderColor: "red",
