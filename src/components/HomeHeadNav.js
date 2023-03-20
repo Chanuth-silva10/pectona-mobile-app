@@ -1,9 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { colors } from "../globals/style";
+
+const windowWidth = Dimensions.get("window").width;
 
 const HomeHeadNav = ({ navigation }) => {
   return (
@@ -17,14 +19,14 @@ const HomeHeadNav = ({ navigation }) => {
       <View style={styles.containerin}>
         <MaterialCommunityIcons
           name="dog"
-          size={26}
+          size={30}
           color="black"
           style={styles.myicon}
         />
         <Text style={styles.mytext}>Pectona</Text>
         <MaterialCommunityIcons
           name="dog"
-          size={26}
+          size={30}
           color="black"
           style={styles.myicon}
         />
@@ -36,7 +38,7 @@ const HomeHeadNav = ({ navigation }) => {
       >
         <FontAwesome5
           name="user-circle"
-          size={26}
+          size={30}
           color="black"
           style={styles.myicon}
         />
@@ -50,9 +52,9 @@ export default HomeHeadNav;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    width: "100%",
+    width: windowWidth,
     justifyContent: "space-between",
-    padding: 10,
+    padding: 15,
     alignItems: "center",
     borderBottomColor: colors.mtg,
     borderBottomWidth: 0.5,
