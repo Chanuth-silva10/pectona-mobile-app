@@ -3,6 +3,7 @@ import React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { colors } from "../globals/style";
 
 const HomeHeadNav = ({ navigation }) => {
   return (
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 10,
     alignItems: "center",
-    backgroundColor: '#fff',
+    borderBottomColor: colors.mtg,
+    borderBottomWidth: 0.5,
+    backgroundColor: "#fff",
     elevation: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
   },
   containerin: {
     flexDirection: "row",
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     color: "#694fad",
   },
   mytext: {
-    color: '#694fad',
+    color: "#694fad",
     fontSize: 24,
   },
 });
