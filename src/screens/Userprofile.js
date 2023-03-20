@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    width: windowWidth,
+    width: windowWidth * 0.8,
     marginVertical: 10,
     backgroundColor: "#fff",
     borderRadius: 10,
