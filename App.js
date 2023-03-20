@@ -7,7 +7,7 @@ import LoginScreen from "./src/screens/LoginSignupScreens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import Userprofile from "./src/screens/Userprofile";
 import User1 from "./src/screens/User1";
-import Pets from "./src/screens/Pets";
+import Pets from "./src/screens/PetScreens/Pets";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
