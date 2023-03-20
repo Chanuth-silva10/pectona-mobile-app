@@ -26,7 +26,7 @@ const BottomNav = ({ navigation }) => {
           color="black"
           style={styles.icon1}
           onPress={() => {
-            navigation.navigate("user2");
+            navigation.navigate("pets");
           }}
         />
       </View>
@@ -37,7 +37,7 @@ const BottomNav = ({ navigation }) => {
           color="black"
           style={styles.icon1}
           onPress={() => {
-            navigation.navigate("user2");
+            navigation.navigate("user1");
           }}
         />
       </View>
