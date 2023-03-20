@@ -4,11 +4,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { navbtn, navbtnin } from "../globals/style";
 import { AntDesign } from "@expo/vector-icons";
 import { colors, btn2 } from "../globals/style";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 import { firebase } from "../../Firebase/firebaseConfig";
 const Userprofile = ({ navigation }) => {
@@ -273,14 +277,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     // alignItems: 'center',
-    width: "100%",
+    width: windowWidth,
   },
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     // justifyContent: 'center',
-    width: "100%",
+    width: windowWidth,
   },
   head1: {
     fontSize: 40,
@@ -289,7 +293,7 @@ const styles = StyleSheet.create({
     color: colors.mtg,
   },
   containerin: {
-    width: "90%",
+    width: windowWidth * 0.9,
     alignItems: "center",
     borderWidth: 2,
     borderColor: colors.mtg,
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
   },
   inputout: {
     flexDirection: "row",
-    width: "100%",
+    width: windowWidth,
     marginVertical: 10,
     backgroundColor: "#694fad",
     borderRadius: 10,
@@ -324,7 +328,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    width: "100%",
+    width: windowWidth,
     marginVertical: 10,
     backgroundColor: "#fff",
     borderRadius: 10,

@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { colors } from "../globals/style";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 const BottomNav = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: "white",
-    width: "100%",
+    width: windowWidth,
     elevation: 30,
     borderTopColor: colors.mtg,
     borderTopWidth: 0.5,
@@ -80,8 +84,8 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -20,
     backgroundColor: colors.mtg,
-    width: 60,
-    height: 60,
+    width: windowWidth *0.6,
+    height: windowHeight * 0.6,
     borderRadius: 60,
   },
   icon2: {
