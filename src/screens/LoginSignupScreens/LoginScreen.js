@@ -5,12 +5,18 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { titles, colors, btn1, hr80 } from "../../globals/style";
 import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 import { firebase } from "../../../Firebase/firebaseConfig";
 
@@ -46,6 +52,8 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={styles.container}>
       {/* <Statusbar /> */}
       <Text style={styles.head1}>Sign In</Text>
@@ -134,15 +142,18 @@ const LoginScreen = ({ navigation }) => {
         </Text>
       </Text>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: windowHeight * 0.2,
   },
   head1: {
     fontSize: titles.title1,
@@ -153,7 +164,7 @@ const styles = StyleSheet.create({
   },
   inputout: {
     flexDirection: "row",
-    width: "80%",
+    width: windowWidth * 0.8,
     marginVertical: 10,
     backgroundColor: "white",
     borderRadius: 10,
@@ -164,7 +175,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 18,
     marginLeft: 10,
-    width: "80%",
+    width: windowWidth * 0.8,
   },
   forgot: {
     color: colors.text2,
@@ -186,7 +197,7 @@ const styles = StyleSheet.create({
   },
   gficon: {
     backgroundColor: "white",
-    width: 50,
+    width: windowWidth * 0.3,
     margin: 10,
     borderRadius: 10,
     padding: 10,

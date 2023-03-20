@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
   },
   gficon: {
     backgroundColor: "white",
-    width: windowWidth * 0.2,
+    width: windowWidth * 0.3,
     marginHorizontal: 10,
     borderRadius: 10,
     padding: 10,
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   ahc: {
-   marginBottom: windowHeight * 0.05,
+    marginBottom: windowHeight * 0.05,
   },
 });
 
