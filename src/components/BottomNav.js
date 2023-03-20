@@ -68,8 +68,6 @@ const styles = StyleSheet.create({
     elevation: 30,
     borderTopColor: colors.mtg,
     borderTopWidth: 0.5,
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
   },
   btncon1: {
     alignItems: "center",

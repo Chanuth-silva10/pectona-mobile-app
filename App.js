@@ -6,8 +6,8 @@ import SignupScreen from "./src/screens/LoginSignupScreens/SignupScreen";
 import LoginScreen from "./src/screens/LoginSignupScreens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import Userprofile from "./src/screens/Userprofile";
-import User1 from "./src/screens/User1";
 import PetList from "./src/screens/PetScreens/PetList";
+import WalletManagement from "./src/screens/walletManagement/WalletManagement";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -61,7 +61,7 @@ export default function App() {
         />
         <Stack.Screen
           name="user1"
-          component={User1}
+          component={WalletManagement}
           options={{
             headerShown: false,
           }}
