@@ -94,57 +94,6 @@ export const petProfileStyles = StyleSheet.create({
         marginRight: 80,
         font: 'Roboto',
     },
-    placeholderStyles: {
-        fontSize: 16,
-    },
-    privacyPolicy: {
-        fontSize: 16,
-        font: 'Roboto',
-        textAlign: 'center',
-        color: "#407A9C",
-        marginTop: -25
-    },
-    agreement: {
-        fontSize: 14,
-        font: 'Roboto',
-        textAlign: 'center',
-        marginTop: 5,
-        marginBottom: 40
-    },
-    quickGuide: {
-        marginTop: 10,
-        marginLeft: 285,
-        color: "#6F6E6E"
-    },
-    cameraIcon: {
-        marginTop: -65,
-        marginLeft: 285,
-        color: "#6F6E6E",
-        marginLeft: 190,
-        marginBottom: 30,
-    },
-    loginpageImageContainer: {
-        width: 250,
-        height: 200,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 50,
-        borderRadius: 15,
-        marginBottom: 60,
-    },
-    loginbuttonContainer: {
-        marginTop: 15,
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 10
-    },
-    forgotPasswordStyle: {
-        fontSize: 16,
-        font: 'Roboto',
-        textAlign: 'center',
-        color: "#407A9C",
-        marginBottom: 50
-    },
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -172,4 +121,36 @@ export const petProfileStyles = StyleSheet.create({
         textAlign: "center",
         marginVertical: 20,
     },
+    icon:{
+        position:'absolute',
+        top:560,
+        left:"80%",
+        color: '#1658CD',
+        boxShadow:'-8px 4px 24px rgba(0, 0, 0, 0.25)'
+    },
+    lable:{
+        font: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '400',
+        color: '#000000',
+        padding:2
+    },
+    message:{
+        position:'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    reminderWrapper:{
+        position:"absolute", 
+        width:'100%', 
+        height:"100%"
+    },
+    iconContainer: {
+        position: "absolute",
+        right: 10
+    }
 })
