@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import logo from "../../../assets/logo.png";
 import { colors, hr80 } from "../../globals/style";
 import { firebase } from "../../../Firebase/firebaseConfig";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const WelcomeScreen = ({ navigation }) => {
   const [userlogged, setUserlogged] = useState(null);
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.mbg,
-    width: "100%",
+    width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -87,17 +97,17 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   logoout: {
-    width: "80%",
-    height: "30%",
+    width: windowWidth,
+    height: windowHeight * 0.32,
     alignItems: "center",
   },
   logo: {
-    width: "50%",
-    height: "80%",
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.25,
   },
   text: {
     fontSize: 18,
-    width: "80%",
+    width: windowWidth * 0.8,
     color: colors.mtg,
     textAlign: "center",
     fontWeight: "500",
