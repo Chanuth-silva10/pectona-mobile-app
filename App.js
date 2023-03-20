@@ -7,7 +7,7 @@ import LoginScreen from "./src/screens/LoginSignupScreens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import Userprofile from "./src/screens/Userprofile";
 import User1 from "./src/screens/User1";
-import User2 from "./src/screens/User2";
+import Pets from "./src/screens/Pets";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -54,7 +54,7 @@ export default function App() {
 
         <Stack.Screen
           name="user2"
-          component={User2}
+          component={Pets}
           options={{
             headerShown: false,
           }}
