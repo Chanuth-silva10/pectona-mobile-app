@@ -12,7 +12,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors, btn2 } from "../globals/style";
 
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 import { firebase } from "../../Firebase/firebaseConfig";
 const Userprofile = ({ navigation }) => {
@@ -149,7 +148,7 @@ const Userprofile = ({ navigation }) => {
     <View style={styles.containerout}>
       <TouchableOpacity onPress={() => navigation.navigate("home")}>
         <View style={navbtn}>
-          <AntDesign name="back" size={24} color="black" style={navbtnin} />
+          <AntDesign name="home" size={24} color="black" style={navbtnin} />
         </View>
       </TouchableOpacity>
       {edit == false && Passwordedit == false && (
@@ -328,7 +327,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    width: windowWidth,
+    width: windowWidth * 0.8,
     marginVertical: 10,
     backgroundColor: "#fff",
     borderRadius: 10,
