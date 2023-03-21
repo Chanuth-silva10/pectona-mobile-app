@@ -14,9 +14,9 @@ const UserList = ({ navigation }) => {
   const [id, setID] = useState([]);
   const [user, setUser] = useState({});
 
-  const getorders = async () => {
-    const ordersRef = firebase.firestore().collection("UserData");
-    ordersRef.onSnapshot((snapshot) => {
+  const getUsers = async () => {
+    const usersRef = firebase.firestore().collection("UserData");
+    usersRef.onSnapshot((snapshot) => {
       setUsers(snapshot.docs.map((doc) => doc.data()));
       setID(snapshot.docs.map((doc) => doc.id));
     });
@@ -24,7 +24,7 @@ const UserList = ({ navigation }) => {
 
   console.log(id);
   useEffect(() => {
-    getorders();
+    getUsers();
   }, []);
 
   // const deleteItem = () => {
@@ -50,7 +50,7 @@ const UserList = ({ navigation }) => {
 
       <ScrollView style={userProfileStyles.containerin}>
         <Text style={userProfileStyles.head1}>User List</Text>
-        {users.map((order, index) => {
+        {users.map((user, index) => {
           return (
             <Card
               children={
@@ -58,16 +58,16 @@ const UserList = ({ navigation }) => {
                   <HStack m={2} spacing={80}>
                     <View>
                       <Text style={userProfileStyles.lable}>
-                        User Name : {order.name}
+                        User Name : {user.name}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Email : {order.email}
+                        User Email : {user.email}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Address: {order.phone}
+                        User Address: {user.phone}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Phone : {order.phone}
+                        User Phone : {user.phone}
                       </Text>
                     </View>
                     <View style={userProfileStyles.iconContainer}>
@@ -75,7 +75,7 @@ const UserList = ({ navigation }) => {
                         <MaterialIcons
                           name="delete"
                           size={30}
-                          // onPress={() => deleteItem(order.uid)}
+                          // onPress={() => deleteItem(user.uid)}
                         />
                       </HStack>
                     </View>
