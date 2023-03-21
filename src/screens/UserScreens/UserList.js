@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, StatusBar, ScrollView } from "react-native";
+import {Text, View, StatusBar, ScrollView } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
 import BottomNav from "../../components/BottomNav";
-import { colors } from "../../globals/style";
 import { firebase } from "../../../Firebase/firebaseConfig";
 import { userProfileStyles } from "./UserProfileStyles.js";
 import Card from "../../components/Card/Card";
@@ -13,9 +12,9 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 const UserList = ({ navigation }) => {
   const [users, setUsers] = useState([]);
   const [id, setID] = useState([]);
-  // const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
 
-  const getUsers = async () => {
+  const getorders = async () => {
     const ordersRef = firebase.firestore().collection("UserData");
     ordersRef.onSnapshot((snapshot) => {
       setUsers(snapshot.docs.map((doc) => doc.data()));
@@ -24,9 +23,8 @@ const UserList = ({ navigation }) => {
   };
 
   console.log(id);
-
   useEffect(() => {
-    getUsers();
+    getorders();
   }, []);
 
   // const deleteItem = () => {
@@ -39,7 +37,7 @@ const UserList = ({ navigation }) => {
   //       console.log("User deleted!");
   //     });
 
-  //   getUsers();
+  //   getorders();
   // };
 
   return (
@@ -52,7 +50,7 @@ const UserList = ({ navigation }) => {
 
       <ScrollView style={userProfileStyles.containerin}>
         <Text style={userProfileStyles.head1}>User List</Text>
-        {users.map((user, index) => {
+        {users.map((order, index) => {
           return (
             <Card
               children={
@@ -60,16 +58,16 @@ const UserList = ({ navigation }) => {
                   <HStack m={2} spacing={80}>
                     <View>
                       <Text style={userProfileStyles.lable}>
-                        User Name : {user.name}
+                        User Name : {order.name}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Email : {user.email}
+                        User Email : {order.email}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Address: {user.phone}
+                        User Address: {order.phone}
                       </Text>
                       <Text style={userProfileStyles.lable}>
-                        User Phone : {user.phone}
+                        User Phone : {order.phone}
                       </Text>
                     </View>
                     <View style={userProfileStyles.iconContainer}>
@@ -77,7 +75,7 @@ const UserList = ({ navigation }) => {
                         <MaterialIcons
                           name="delete"
                           size={30}
-                          // onPress={() => deleteItem(user.uid)}
+                          // onPress={() => deleteItem(order.uid)}
                         />
                       </HStack>
                     </View>
