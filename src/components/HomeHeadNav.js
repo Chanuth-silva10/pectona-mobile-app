@@ -43,6 +43,18 @@ const HomeHeadNav = ({ navigation }) => {
           style={styles.myicon}
         />
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("userList");
+        }}
+      >
+        <FontAwesome5
+          name="user-circle"
+          size={30}
+          color="black"
+          style={styles.myicon}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

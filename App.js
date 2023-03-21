@@ -8,6 +8,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import Userprofile from "./src/screens/Userprofile";
 import PetList from "./src/screens/PetScreens/PetList";
 import WalletManagement from "./src/screens/walletManagement/WalletManagement";
+import UserList from "./src/screens/UserScreens/UserList";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -51,7 +52,13 @@ export default function App() {
             headerShown: false,
           }}
         />
-
+        <Stack.Screen
+          name="userList"
+          component={UserList}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="pets"
           component={PetList}
