@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { navbtn, navbtnin } from "../globals/style";
 import { AntDesign } from "@expo/vector-icons";
-import { colors, btn2, btn3 } from "../globals/style";
+import { colors, btn1, btn3, titles } from "../globals/style";
 import ProfileHeadNav from "../components/ProfileHeadNav";
 
 const windowWidth = Dimensions.get("window").width;
@@ -152,7 +152,7 @@ const Userprofile = ({ navigation }) => {
     <View style={styles.containerout}>
       <ScrollView>
         <ProfileHeadNav navigation={navigation} />
-       
+
         {edit == false && Passwordedit == false && (
           <View>
             <View style={styles.container}>
@@ -194,26 +194,25 @@ const Userprofile = ({ navigation }) => {
                 </Text>
               </View>
             </View>
+
             <TouchableOpacity
+              style={btn3}
               onPress={() => {
                 setEdit(!edit);
                 setPasswordedit(false);
               }}
             >
-              <View style={btn3}>
-                <Text style={styles.btntxt}>Edit Details</Text>
-              </View>
+              <Text style={styles.btntxt}>Edit Details</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
+              style={btn3}
               onPress={() => {
                 setPasswordedit(!Passwordedit);
                 setEdit(false);
               }}
             >
-              <View style={btn3}>
-                <Text style={styles.btntxt}>Change Password</Text>
-              </View>
+              <Text style={styles.btntxt}>Change Password</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -267,10 +266,8 @@ const Userprofile = ({ navigation }) => {
           </View>
         )}
 
-        <TouchableOpacity onPress={() => logoutuser()}>
-          <View style={btn3}>
-            <Text style={styles.btntxt}>Logout</Text>
-          </View>
+        <TouchableOpacity style={btn3} onPress={() => logoutuser()}>
+          <Text style={styles.btntxt}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
       <BottomNav></BottomNav>
