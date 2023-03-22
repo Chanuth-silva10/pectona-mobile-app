@@ -9,6 +9,8 @@ import Userprofile from "./src/screens/Userprofile";
 import PetList from "./src/screens/PetScreens/PetList";
 import WalletManagement from "./src/screens/walletManagement/WalletManagement";
 import UserList from "./src/screens/UserScreens/UserList";
+import Pets from "./src/screens/PetScreens/Pets";
+import UpdatePets from "./src/screens/PetScreens/UpdatePet";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -62,6 +64,20 @@ export default function App() {
         <Stack.Screen
           name="pets"
           component={PetList}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="petcreation"
+          component={Pets}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="petupdate"
+          component={UpdatePets}
           options={{
             headerShown: false,
           }}
