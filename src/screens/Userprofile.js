@@ -157,6 +157,15 @@ const Userprofile = ({ navigation }) => {
           <View>
             <View style={styles.container}>
               <View style={styles.containerin}>
+                <Image
+                  style={styles.userImg}
+                  source={{
+                    uri: userdata
+                      ? userdata.userImg ||
+                        "https://res.cloudinary.com/djnpm1f5w/image/upload/v1677755895/avatars/lu3owvzf52punwaj7tkc.jpg"
+                      : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
+                  }}
+                />
                 <Text style={styles.head2}>
                   Name:{" "}
                   {userdata ? (
@@ -306,8 +315,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   userImg: {
-    height: 100,
-    width: 100,
+    height: windowHeight * 0.15,
+    width: windowWidth * 0.33,
     borderRadius: 75,
   },
   head2: {
@@ -317,7 +326,7 @@ const styles = StyleSheet.create({
   },
   head2in: {
     fontSize: 20,
-    fontWeight: "350",
+    fontWeight: "300",
   },
   inputout: {
     flexDirection: "row",

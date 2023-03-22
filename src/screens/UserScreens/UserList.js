@@ -1,4 +1,4 @@
-import {Text, View, StatusBar, ScrollView } from "react-native";
+import { Text, View, StatusBar, ScrollView, Alert, Image } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -8,6 +8,7 @@ import { userProfileStyles } from "./UserProfileStyles.js";
 import Card from "../../components/Card/Card";
 import { HStack } from "@react-native-material/core";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Users from "./Users";
 
 const UserList = ({ navigation }) => {
   const [users, setUsers] = useState([]);
@@ -22,23 +23,41 @@ const UserList = ({ navigation }) => {
     });
   };
 
-  console.log(id);
+  console.log();
   useEffect(() => {
     getUsers();
   }, []);
 
-  // const deleteItem = () => {
-  //   firebase
-  //     .firestore()
-  //     .collection("UserData")
-  //     .doc("sc3xrpL7yJdB3swjpOza")
-  //     .delete()
-  //     .then(() => {
-  //       console.log("User deleted!");
-  //     });
+  const showConfirmDialog = (id) => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to delete the user?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteItem(id);
+          },
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
 
-  //   getorders();
-  // };
+  const deleteItem = (id) => {
+    firebase
+      .firestore()
+      .collection("UserData")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("User deleted!");
+      });
+
+    getUsers();
+  };
 
   return (
     <View style={userProfileStyles.container}>
@@ -48,40 +67,26 @@ const UserList = ({ navigation }) => {
         <BottomNav navigation={navigation} />
       </View>
 
-      <ScrollView style={userProfileStyles.containerin}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ flex: 1, width: "100%" }}
+      >
         <Text style={userProfileStyles.head1}>User List</Text>
         {users.map((user, index) => {
           return (
-            <Card
-              children={
-                <View key={index}>
-                  <HStack m={2} spacing={80}>
-                    <View>
-                      <Text style={userProfileStyles.lable}>
-                        User Name : {user.name}
-                      </Text>
-                      <Text style={userProfileStyles.lable}>
-                        User Email : {user.email}
-                      </Text>
-                      <Text style={userProfileStyles.lable}>
-                        User Address: {user.phone}
-                      </Text>
-                      <Text style={userProfileStyles.lable}>
-                        User Phone : {user.phone}
-                      </Text>
-                    </View>
-                    <View style={userProfileStyles.iconContainer}>
-                      <HStack m={2} spacing={5}>
-                        <MaterialIcons
-                          name="delete"
-                          size={30}
-                          // onPress={() => deleteItem(user.uid)}
-                        />
-                      </HStack>
-                    </View>
-                  </HStack>
-                </View>
-              }
+            <Users
+              key={index}
+              image={user?.userImg}
+              name={user?.name}
+              email={user?.email}
+              phone={user?.phone}
+              address={user?.address}
+              onPressView={() => {
+                console.log("view is working " + id[index]);
+              }}
+              onPressDelete={() => {
+                showConfirmDialog(id[index]);
+              }}
             />
           );
         })}
