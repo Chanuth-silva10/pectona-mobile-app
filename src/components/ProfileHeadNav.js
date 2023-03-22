@@ -1,44 +1,38 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { colors } from "../globals/style";
+import { navbtn, navbtnin } from "../globals/style";
 
 const windowWidth = Dimensions.get("window").width;
 
-const HomeHeadNav = ({ navigation }) => {
+const ProfileHeadNav = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Fontisto
-        name="nav-icon-list-a"
-        size={20}
-        color="black"
-        style={styles.myicon}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("home")}>
+        <View style={navbtn}>
+          <AntDesign name="home" size={25} color="black" style={navbtnin} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.containerin}>
-        <MaterialCommunityIcons
-          name="dog"
-          size={30}
-          color="black"
-          style={styles.myicon}
-        />
-        <Text style={styles.mytext}>Pectona</Text>
-        <MaterialCommunityIcons
-          name="dog"
-          size={30}
-          color="black"
-          style={styles.myicon}
-        />
+        <Text style={styles.mytext}>Profile</Text>
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("userprofile");
+          navigation.navigate("userList");
         }}
       >
         <FontAwesome5
           name="user-circle"
-          size={30}
+          size={35}
           color="black"
           style={styles.myicon}
         />
@@ -47,7 +41,7 @@ const HomeHeadNav = ({ navigation }) => {
   );
 };
 
-export default HomeHeadNav;
+export default ProfileHeadNav;
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +64,7 @@ const styles = StyleSheet.create({
   },
   mytext: {
     color: "#694fad",
-    fontSize: 24,
+    fontSize: 38,
+    fontWeight: "450",
   },
 });

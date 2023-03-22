@@ -37,7 +37,6 @@ const SignupScreen = ({ navigation }) => {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  // console.log(email);
 
   const [customError, setCustomError] = useState("");
   const [successmsg, setSuccessmsg] = useState(null);
@@ -45,7 +44,6 @@ const SignupScreen = ({ navigation }) => {
   // const [useruid, setUseruid] = useState('');
   const handleSignup = () => {
     if (password != cpassword) {
-      // alert("Password doesn't match");
       setCustomError("Password doesn't match");
       return;
     } else if (phone.length != 10) {
@@ -66,14 +64,12 @@ const SignupScreen = ({ navigation }) => {
               .add({
                 email: email,
                 password: password,
-                // cpassword: cpassword,
                 phone: phone,
                 name: name,
                 address: address,
                 uid: userCredentials?.user?.uid,
               })
               .then(() => {
-                console.log("data added to firestore");
                 setSuccessmsg("User created successfully");
               })
               .catch((error) => {
@@ -123,7 +119,7 @@ const SignupScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                placeholder="Full Name"
+                placeholder="Enter your name"
                 onFocus={() => {
                   setEmailfocus(false);
                   setPasswordfocus(false);
@@ -144,7 +140,7 @@ const SignupScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                placeholder="Email"
+                placeholder="Enter your email"
                 onFocus={() => {
                   setEmailfocus(true);
                   setPasswordfocus(false);
@@ -179,7 +175,6 @@ const SignupScreen = ({ navigation }) => {
               />
             </View>
 
-            {/* password start */}
             <View style={styles.inputout}>
               <MaterialCommunityIcons
                 name="lock-outline"
@@ -188,7 +183,7 @@ const SignupScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Enter your password"
                 onFocus={() => {
                   setEmailfocus(false);
                   setPasswordfocus(true);
@@ -208,7 +203,7 @@ const SignupScreen = ({ navigation }) => {
                 onPress={() => setShowpassword(!showpassword)}
               />
             </View>
-            {/*  */}
+
             <View style={styles.inputout}>
               <MaterialCommunityIcons
                 name="lock-outline"
@@ -217,10 +212,10 @@ const SignupScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                placeholder="Confirm Password"
+                placeholder="Re-enter your password"
                 onFocus={() => {
                   setEmailfocus(false);
-                  setPasswordfocus(false);
+                  setPasswordfocus(true);
                   setShowpassword(true);
                   setNamefocus(false);
                   setPhonefocus(false);
@@ -242,8 +237,8 @@ const SignupScreen = ({ navigation }) => {
             <Text style={styles.address}>Please enter your address</Text>
             <View style={styles.inputout}>
               <TextInput
-                style={styles.input1}
-                placeholder="Enter your Address"
+                style={styles.input}
+                placeholder="Enter your address"
                 onChangeText={(text) => setAddress(text)}
                 onPress={() => {
                   setEmailfocus(false);
