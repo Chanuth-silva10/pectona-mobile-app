@@ -34,6 +34,17 @@ module.exports = {
         margin: 10,
         alignSelf: 'center',
     },
+    btn3: {
+        width: '80%',
+        height: 60,
+        backgroundColor: '#694fad',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        alignSelf: 'center',
+    },
     hr80: {
         width: '80%',
         borderBottomColor: '#694fad',

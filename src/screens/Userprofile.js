@@ -5,15 +5,20 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
+  Image,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { navbtn, navbtnin } from "../globals/style";
 import { AntDesign } from "@expo/vector-icons";
-import { colors, btn2 } from "../globals/style";
+import { colors, btn2, btn3 } from "../globals/style";
+import ProfileHeadNav from "../components/ProfileHeadNav";
 
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 import { firebase } from "../../Firebase/firebaseConfig";
+import BottomNav from "../components/BottomNav";
 const Userprofile = ({ navigation }) => {
   const [userloggeduid, setUserloggeduid] = useState(null);
   const [userdata, setUserdata] = useState(null);
@@ -23,7 +28,6 @@ const Userprofile = ({ navigation }) => {
       firebase.auth().onAuthStateChanged((user) => {
         // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
           console.log("no user");
@@ -146,125 +150,130 @@ const Userprofile = ({ navigation }) => {
   };
   return (
     <View style={styles.containerout}>
-      <TouchableOpacity onPress={() => navigation.navigate("home")}>
-        <View style={navbtn}>
-          <AntDesign name="home" size={24} color="black" style={navbtnin} />
-        </View>
-      </TouchableOpacity>
-      {edit == false && Passwordedit == false && (
-        <View style={styles.container}>
-          <Text style={styles.head1}>Your Profile</Text>
-          <View style={styles.containerin}>
-            <Text style={styles.head2}>
-              Name:{" "}
-              {userdata ? (
-                <Text style={styles.head2in}>{userdata.name}</Text>
-              ) : (
-                "loading"
-              )}
-            </Text>
+      <ScrollView>
+        <ProfileHeadNav navigation={navigation} />
+       
+        {edit == false && Passwordedit == false && (
+          <View>
+            <View style={styles.container}>
+              <View style={styles.containerin}>
+                <Text style={styles.head2}>
+                  Name:{" "}
+                  {userdata ? (
+                    <Text style={styles.head2in}>{userdata.name}</Text>
+                  ) : (
+                    "loading"
+                  )}
+                </Text>
 
-            <Text style={styles.head2}>
-              Email:{" "}
-              {userdata ? (
-                <Text style={styles.head2in}>{userdata.email}</Text>
-              ) : (
-                "loading"
-              )}
-            </Text>
+                <Text style={styles.head2}>
+                  Email:{" "}
+                  {userdata ? (
+                    <Text style={styles.head2in}>{userdata.email}</Text>
+                  ) : (
+                    "loading"
+                  )}
+                </Text>
 
-            <Text style={styles.head2}>
-              Phone:{" "}
-              {userdata ? (
-                <Text style={styles.head2in}>{userdata.phone}</Text>
-              ) : (
-                "loading"
-              )}
-            </Text>
+                <Text style={styles.head2}>
+                  Phone:{" "}
+                  {userdata ? (
+                    <Text style={styles.head2in}>{userdata.phone}</Text>
+                  ) : (
+                    "loading"
+                  )}
+                </Text>
 
-            <Text style={styles.head2}>
-              Address:{" "}
-              {userdata ? (
-                <Text style={styles.head2in}>{userdata.address}</Text>
-              ) : (
-                "loading"
-              )}
-            </Text>
+                <Text style={styles.head2}>
+                  Address:{" "}
+                  {userdata ? (
+                    <Text style={styles.head2in}>{userdata.address}</Text>
+                  ) : (
+                    "loading"
+                  )}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setEdit(!edit);
+                setPasswordedit(false);
+              }}
+            >
+              <View style={btn3}>
+                <Text style={styles.btntxt}>Edit Details</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setPasswordedit(!Passwordedit);
+                setEdit(false);
+              }}
+            >
+              <View style={btn3}>
+                <Text style={styles.btntxt}>Change Password</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              setEdit(!edit);
-              setPasswordedit(false);
-            }}
-          >
-            <View style={btn2}>
-              <Text style={styles.btntxt}>Edit Details</Text>
+        )}
+        {edit == true && (
+          <View>
+            <View style={styles.container}>
+              <Text style={styles.head1}>Edit Profile</Text>
+              <View style={styles.containerin}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Name"
+                  onChangeText={(e) => setNewName(e)}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Address"
+                  onChangeText={(e) => setNewAddress(e)}
+                />
+              </View>
             </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              setPasswordedit(!Passwordedit);
-              setEdit(false);
-            }}
-          >
-            <View style={btn2}>
-              <Text style={styles.btntxt}>Change Password</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
-      {edit == true && (
-        <View style={styles.container}>
-          <Text style={styles.head1}>Edit Profile</Text>
-          <View style={styles.containerin}>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              onChangeText={(e) => setNewName(e)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Address"
-              onChangeText={(e) => setNewAddress(e)}
-            />
+            <TouchableOpacity onPress={() => updateuser()}>
+              <View style={btn3}>
+                <Text style={styles.btntxt}>Submit</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => updateuser()}>
-            <View style={btn2}>
-              <Text style={styles.btntxt}>Submit</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
+        )}
 
-      {Passwordedit == true && (
-        <View style={styles.container}>
-          <Text style={styles.head1}>Change Password</Text>
-          <View style={styles.containerin}>
-            <TextInput
-              style={styles.input}
-              placeholder="Old Password"
-              onChangeText={(e) => setOldPassword(e)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="New Password"
-              onChangeText={(e) => setNewPassword(e)}
-            />
+        {Passwordedit == true && (
+          <View>
+            <View style={styles.container}>
+              <Text style={styles.head1}>Change Password</Text>
+              <View style={styles.containerin}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your password"
+                  onChangeText={(e) => setOldPassword(e)}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter a new password"
+                  onChangeText={(e) => setNewPassword(e)}
+                />
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => updatepassword()}>
+              <View style={btn3}>
+                <Text style={styles.btntxt}>Submit</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => updatepassword()}>
-            <View style={btn2}>
-              <Text style={styles.btntxt}>Submit</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
+        )}
 
-      <TouchableOpacity onPress={() => logoutuser()}>
-        <View style={btn2}>
-          <Text style={styles.btntxt}>Logout</Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => logoutuser()}>
+          <View style={btn3}>
+            <Text style={styles.btntxt}>Logout</Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
+      <BottomNav></BottomNav>
     </View>
   );
 };
@@ -275,18 +284,17 @@ const styles = StyleSheet.create({
   containerout: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: 'center',
     width: windowWidth,
+    height: windowHeight,
   },
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    // justifyContent: 'center',
     width: windowWidth,
   },
   head1: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "400",
     marginVertical: 20,
     color: colors.mtg,
@@ -299,6 +307,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     marginTop: 20,
+  },
+  userImg: {
+    height: 100,
+    width: 100,
+    borderRadius: 75,
   },
   head2: {
     fontSize: 20,
