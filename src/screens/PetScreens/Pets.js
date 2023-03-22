@@ -8,7 +8,16 @@ import { petProfileStyles } from "./PetProfileStyles.js";
 import { View, Text, ScrollView, TextInput, Button } from "react-native";
 import DropDown from "../../components/DropDown/DropDown";
 
+firebase.app();
+
 const Pets = ({ navigation }) => {
+
+  const [name, setName] = useState('');
+  const [breed, setBreed] = useState('');
+  const [color, setColor] = useState('');
+  const [dob, setDob] = useState('');
+  const [spec, setSpec] = useState('');
+  const [gen, setGen] = useState('');
 
   const [species, setSpecies] = useState([
     { label: 'Dog', value: 'Dog' },
@@ -22,6 +31,8 @@ const Pets = ({ navigation }) => {
 
   const [userloggeduid, setUserloggeduid] = useState(null);
   const [userdata, setUserdata] = useState(null);
+
+  const [userid, setUserID] = useState(userloggeduid);
 
   useEffect(() => {
     const checklogin = () => {
@@ -55,9 +66,53 @@ const Pets = ({ navigation }) => {
 
   console.log(userdata);
 
+  const handleName = (e) => {
+    setName(e.nativeEvent.text)
+  }
+
+  const handleSpecies = (e) => {
+    setSpec(e.nativeEvent.text)
+  }
+
+  const handleBreed = (e) => {
+    setBreed(e.nativeEvent.text)
+  }
+
+  const handleGender = (e) => {
+    setGen(e.nativeEvent.text)
+  }
+
+  const handleColor = (e) => {
+    setColor(e.nativeEvent.text)
+  }
+
+  const handleDob = (e) => {
+    setDob(e.nativeEvent.text)
+  }
+
+  const handleSubmit = () => {
+
+    firebase.firestore()
+      .collection('PetData')
+      .add({
+        name: name,
+        species: spec,
+        breed: breed,
+        gender: gen,
+        color: color,
+        dob: dob,
+        userid: userloggeduid
+      })
+      .then(() => {
+        console.log('Pet added!');
+        navigation.navigate('pets');
+      });
+  }
+
   useEffect(() => {
     getuserdata();
   }, [userloggeduid]);
+
   return (
     <View style={petProfileStyles.container}>
       <StatusBar />
@@ -79,29 +134,29 @@ const Pets = ({ navigation }) => {
           Create Pet Profile
         </Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Name" style={petProfileStyles.inputContainer}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Name" style={petProfileStyles.inputContainer} onChange={handleName}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet name</Text>
 
-        <DropDown data={species} disable={true} />
+        <DropDown data={species} disable={true} onChange={handleSpecies} setValue={setSpec} />
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Select Pet Species</Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Breed" style={petProfileStyles.inputContainer}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Breed" style={petProfileStyles.inputContainer} onChange={handleBreed}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet Breed</Text>
 
-        <DropDown data={gender} disable={true} />
+        <DropDown data={gender} disable={true} onChange={handleGender} setValue={setGen} />
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Select Pet Gender</Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Color" style={petProfileStyles.inputContainer}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Color" style={petProfileStyles.inputContainer} onChange={handleColor}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet Color</Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Date Of Birth" style={petProfileStyles.inputContainer}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Date Of Birth" style={petProfileStyles.inputContainer} onChange={handleDob}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Please Enter Pet Date of Birth</Text>
 
         <View style={petProfileStyles.cancelbuttonContainer}>
           <Button
             title="Cancel"
             color="#B6B3B3"
-          // onPress={() => navigation.navigate('PetList')}
+            onPress={() => navigation.navigate('pets')}
           >
           </Button>
         </View>
@@ -109,7 +164,7 @@ const Pets = ({ navigation }) => {
         <View style={petProfileStyles.editbuttonContainer}>
           <Button
             title="Submit"
-          // onPress={handleSubmit}
+            onPress={handleSubmit}
           >
           </Button>
         </View>
