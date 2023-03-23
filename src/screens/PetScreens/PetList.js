@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Alert } from "react-native";
+import { StyleSheet, StatusBar, Alert, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -96,7 +96,7 @@ const PetList = ({ navigation }) => {
         console.log("User deleted!");
       });
 
-      getPets();
+    getPets();
   };
 
   return (
@@ -110,12 +110,9 @@ const PetList = ({ navigation }) => {
 
       <ScrollView style={petProfileStyles.containerin}>
         <View style={petProfileStyles.editbuttonContainer}>
-          <Button
-            title="Create a Pet Profile"
-            color="#917DCA"
-            onPress={() => navigation.navigate('petcreation')}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.createpet} onPress={() => navigation.navigate('petcreation')}>
+            <Text style={petProfileStyles.btntxt}>Create a Pet Profile</Text>
+          </TouchableOpacity>
         </View>
 
 

@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -12,12 +12,12 @@ firebase.app();
 
 const Pets = ({ navigation }) => {
 
-    const [name, setName] = useState('');
-    const [breed, setBreed] = useState('');
-    const [color, setColor] = useState('');
-    const [dob, setDob] = useState('');
-    const [spec, setSpec] = useState('');
-    const [gen, setGen] = useState('');
+  const [name, setName] = useState('');
+  const [breed, setBreed] = useState('');
+  const [color, setColor] = useState('');
+  const [dob, setDob] = useState('');
+  const [spec, setSpec] = useState('');
+  const [gen, setGen] = useState('');
 
   const [species, setSpecies] = useState([
     { label: 'Dog', value: 'Dog' },
@@ -154,20 +154,15 @@ const Pets = ({ navigation }) => {
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Please Enter Pet Date of Birth</Text>
 
         <View style={petProfileStyles.cancelbuttonContainer}>
-          <Button
-            title="Cancel"
-            color="#B6B3B3"
-            onPress={() => navigation.navigate('pets')}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.cancelbtn} onPress={() => navigation.navigate('pets')}>
+            <Text style={petProfileStyles.btntxt}>Cancel</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={petProfileStyles.editbuttonContainer}>
-          <Button
-            title="Submit"
-            onPress={handleSubmit}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.sumitbtn} onPress={handleSubmit}>
+            <Text style={petProfileStyles.btntxt}>Submit</Text>
+          </TouchableOpacity>
         </View>
 
       </ScrollView>

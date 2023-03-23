@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -90,13 +90,13 @@ const UpdatePets = ({ navigation, route }) => {
                 <TextInput variant="outlined" placeholder={name} style={petProfileStyles.inputContainer} value={name} onChangeText={setName}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet name</Text>
 
-                <DropDown data={species} disable={true} value={spec} onChange={setSpec}/>
+                <DropDown data={species} disable={true} value={spec} onChange={setSpec} />
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Species</Text>
 
                 <TextInput variant="outlined" placeholder={breed} style={petProfileStyles.inputContainer} value={breed} onChangeText={setBreed}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Breed</Text>
 
-                <DropDown data={gender} disable={true} setValue={setGen} value={gen} onChange={setGen}/>
+                <DropDown data={gender} disable={true} setValue={setGen} value={gen} onChange={setGen} />
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Gender</Text>
 
                 <TextInput variant="outlined" placeholder={color} style={petProfileStyles.inputContainer} value={color} onChangeText={setColor}></TextInput>
@@ -106,20 +106,15 @@ const UpdatePets = ({ navigation, route }) => {
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Update Pet Date of Birth</Text>
 
                 <View style={petProfileStyles.cancelbuttonContainer}>
-                    <Button
-                        title="Cancel"
-                        color="#B6B3B3"
-                        //onPress={() => navigation.navigate('pets')}
-                    >
-                    </Button>
+                    <TouchableOpacity style={petProfileStyles.cancelbtn} onPress={() => navigation.navigate('pets')}>
+                        <Text style={petProfileStyles.btntxt}>Cancel</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={petProfileStyles.editbuttonContainer}>
-                    <Button
-                        title="Submit"
-                        onPress={() => updatePet()}
-                    >
-                    </Button>
+                    <TouchableOpacity style={petProfileStyles.sumitbtn}  onPress={() => updatePet()}>
+                        <Text style={petProfileStyles.btntxt}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
 
             </ScrollView>
