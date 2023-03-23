@@ -9,9 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { navbtn, navbtnin } from "../globals/style";
-import { AntDesign } from "@expo/vector-icons";
-import { colors, btn1, btn3, titles } from "../globals/style";
+import { colors, btn3 } from "../globals/style";
 import ProfileHeadNav from "../components/ProfileHeadNav";
 
 const windowWidth = Dimensions.get("window").width;
@@ -56,11 +54,10 @@ const Userprofile = ({ navigation }) => {
     getuserdata();
   }, [userloggeduid]);
 
-  // console.log(userdata);
-
   const [edit, setEdit] = useState(false);
   const [newname, setNewName] = useState("");
   const [newaddress, setNewAddress] = useState("");
+  const [newphone, setNewPhone] = useState("");
 
   const updateuser = async () => {
     const docRef = firebase
@@ -80,6 +77,13 @@ const Userprofile = ({ navigation }) => {
         doc.forEach((doc) => {
           doc.ref.update({
             address: newaddress,
+          });
+        });
+      }
+      if (newphone !== "") {
+        doc.forEach((doc) => {
+          doc.ref.update({
+            phone: newphone,
           });
         });
       }
@@ -116,8 +120,6 @@ const Userprofile = ({ navigation }) => {
         user
           .updatePassword(newpassword)
           .then(() => {
-            // alert("Password updated!");
-
             if (!doc.empty) {
               doc.forEach((doc) => {
                 doc.ref.update({
@@ -230,16 +232,27 @@ const Userprofile = ({ navigation }) => {
             <View style={styles.container}>
               <Text style={styles.head1}>Edit Profile</Text>
               <View style={styles.containerin}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Name"
-                  onChangeText={(e) => setNewName(e)}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Address"
-                  onChangeText={(e) => setNewAddress(e)}
-                />
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter user name"
+                    onChangeText={(e) => setNewName(e)}
+                  />
+                </View>
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your address"
+                    onChangeText={(e) => setNewAddress(e)}
+                  />
+                </View>
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your phone"
+                    onChangeText={(e) => setNewPhone(e)}
+                  />
+                </View>
               </View>
             </View>
             <TouchableOpacity onPress={() => updateuser()}>

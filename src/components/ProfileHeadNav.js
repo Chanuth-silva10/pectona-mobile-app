@@ -17,9 +17,13 @@ const windowWidth = Dimensions.get("window").width;
 const ProfileHeadNav = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate("home")}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
         <View style={navbtn}>
-          <AntDesign name="home" size={25} color="black" style={navbtnin} />
+          <AntDesign name="back" size={25} color="black" style={navbtnin} />
         </View>
       </TouchableOpacity>
       <View style={styles.containerin}>
