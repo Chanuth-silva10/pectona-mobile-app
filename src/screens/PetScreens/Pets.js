@@ -12,12 +12,13 @@ firebase.app();
 
 const Pets = ({ navigation }) => {
 
-  const [name, setName] = useState('');
-  const [breed, setBreed] = useState('');
-  const [color, setColor] = useState('');
-  const [dob, setDob] = useState('');
-  const [spec, setSpec] = useState('');
-  const [gen, setGen] = useState('');
+    const [name, setName] = useState('');
+    const [breed, setBreed] = useState('');
+    const [color, setColor] = useState('');
+    const [dob, setDob] = useState('');
+    const [spec, setSpec] = useState('');
+    const [gen, setGen] = useState('');
+    const [petid, setPetId] = useState('');
 
   const [species, setSpecies] = useState([
     { label: 'Dog', value: 'Dog' },
@@ -101,7 +102,8 @@ const Pets = ({ navigation }) => {
         gender: gen,
         color: color,
         dob: dob,
-        userid: userloggeduid
+        userid: userloggeduid,
+        petid: new Date().getTime().toString(),
       })
       .then(() => {
         console.log('Pet added!');
