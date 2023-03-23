@@ -20,6 +20,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 import { firebase } from "../../../Firebase/firebaseConfig";
+import CustomAlert from "../../components/CustomAlert/CustomAlert";
 
 const SignupScreen = ({ navigation }) => {
   const [emailfocus, setEmailfocus] = useState(false);
@@ -109,7 +110,7 @@ const SignupScreen = ({ navigation }) => {
           <View style={styles.container}>
             <Text style={styles.head1}>Sign Up</Text>
             {customError !== "" && (
-              <Text style={styles.errormsg}>{customError}</Text>
+              <CustomAlert message={customError} type="error"></CustomAlert>
             )}
             <View style={styles.inputout}>
               <AntDesign

@@ -1,5 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { colors } from "../../globals/style";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const userProfileStyles = StyleSheet.create({
   inputContainer: {
@@ -152,5 +155,10 @@ export const userProfileStyles = StyleSheet.create({
   iconContainer: {
     position: "absolute",
     right: 10,
+  },
+  userImg: {
+    height: windowHeight * 0.15,
+    width: windowWidth * 0.33,
+    borderRadius: 75,
   },
 });
