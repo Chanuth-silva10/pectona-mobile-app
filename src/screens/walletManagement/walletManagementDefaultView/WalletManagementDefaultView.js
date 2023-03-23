@@ -2,11 +2,13 @@ import { View, Text, StyleSheet } from "react-native";
 import Lottie from "lottie-react-native";
 import { Pressable } from "react-native";
 import AddCardModal from "../addCardModal/AddCardModal";
-import { useState } from "react";
 
-const WalletManagementDefaultView = ({ navigation }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen);
+const WalletManagementDefaultView = ({
+  isOpen,
+  setIsOpen,
+  getData,
+  setIsLoading,
+}) => {
   return (
     <>
       <View style={styles.container}>
@@ -24,7 +26,13 @@ const WalletManagementDefaultView = ({ navigation }) => {
         <Pressable style={styles.addNewButton} onPress={() => setIsOpen(true)}>
           <Text style={styles.notifyText}>Add New Card</Text>
         </Pressable>
-        <AddCardModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        <AddCardModal
+          type={"add"}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          getData={getData}
+          setIsLoading={setIsLoading}
+        />
       </View>
     </>
   );
