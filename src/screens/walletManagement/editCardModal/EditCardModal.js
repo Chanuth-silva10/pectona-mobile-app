@@ -11,30 +11,27 @@ import { AntDesign } from "@expo/vector-icons";
 import { firebase } from "../../../../Firebase/firebaseConfig";
 import { useState } from "react";
 
-const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
+const EditCardModal = ({ item, isOpen, onClose, getData, setIsLoading }) => {
   const [cardNumber, setCardNumber] = useState("");
-  const [expiryMonth, setExpiryMonth] = useState("");
-  const [expiryYear, setExpiryYear] = useState("");
-  const [cvn, setCVN] = useState("");
-  const saveWallet = async () => {
+  const [expiryMonth, setExpiryMonth] = useState(12);
+  const [expiryYear, setExpiryYear] = useState(1999);
+  const [cvn, setCVN] = useState(123);
+  const editWallet = async () => {
     setIsLoading(true);
-    const db = firebase.firestore().collection("CardWallet");
+    const db = firebase.firestore().collection("CardWallet").doc(item.id);
     const cardToSave = {
       id: new Date(),
-      cardType: "debit",
+      cardType: "Debit",
       cardNumber: cardNumber,
       expiryMonth: expiryMonth,
       expiryYear: expiryYear,
       cvn: cvn,
     };
     onClose();
-    await db
-      .add(cardToSave)
-      .then(() => {
-        getData();
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
+    await db.update(cardToSave).then(() => {
+      getData();
+      setIsLoading(false);
+    });
   };
 
   return (
@@ -51,7 +48,7 @@ const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
             <Pressable onPress={onClose}>
               <AntDesign name="left" size={25} color="black" />
             </Pressable>
-            <Text style={styles.header}>Add New Card</Text>
+            <Text style={styles.header}>Edit Card Details</Text>
           </View>
           <View style={styles.topicContainer}>
             <Text style={styles.topic}>Payment Details</Text>
@@ -64,6 +61,7 @@ const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
                 style={styles.cardNumberInput}
                 keyboardType={"numeric"}
                 maxLength={8}
+                defaultValue={item.cardNumber}
                 onChangeText={(value) => setCardNumber(value)}
               />
             </View>
@@ -109,7 +107,7 @@ const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
           <Pressable onPress={onClose} style={styles.cancelButton}>
             <Text style={styles.cancelText}>Cancel</Text>
           </Pressable>
-          <Pressable onPress={saveWallet} style={styles.submitButton}>
+          <Pressable onPress={editWallet} style={styles.submitButton}>
             <Text style={styles.submitText}>Submit</Text>
           </Pressable>
         </View>
@@ -229,4 +227,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCardModal;
+export default EditCardModal;

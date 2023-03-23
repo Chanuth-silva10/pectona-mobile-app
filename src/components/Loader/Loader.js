@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import AnimatedLoader from "react-native-animated-loader";
 import Lottie from "lottie-react-native";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
