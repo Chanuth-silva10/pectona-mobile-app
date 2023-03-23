@@ -18,7 +18,6 @@ const Pets = ({ navigation }) => {
     const [dob, setDob] = useState('');
     const [spec, setSpec] = useState('');
     const [gen, setGen] = useState('');
-    const [petid, setPetId] = useState('');
 
   const [species, setSpecies] = useState([
     { label: 'Dog', value: 'Dog' },

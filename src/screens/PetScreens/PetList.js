@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, Alert } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -60,30 +60,44 @@ const PetList = ({ navigation }) => {
 
   console.log("Pet id", id);
 
-  const deletePet = (id) => {
-    firebase.firestore().collection("PetData").doc(id).delete().then(() => {
-      console.log("Pet successfully deleted!");
-    }).catch((error) => {
-      console.error("Error removing pet: ", error);
-    });
-  }
-
-  // const updatePet = (id) => {
-  //   const updatedPet = {
-  //     name: inputs.name,
-  //     price: inputs.price,
-  //     quantity: inputs.quantity,
-  //     description: inputs.description,
-  //     imageUrl: inputs.imageUrl,
-  //   }
-
   useEffect(() => {
     getPets();
     getuserdata();
   }, [userloggeduid]);
 
-  console.log(petData);
-  console.log(userloggeduid);
+  // console.log(petData);
+  // console.log(userloggeduid);
+
+  const showConfirmDialog = (id) => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to delete the user?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteItem(id);
+          },
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
+
+  const deleteItem = (id) => {
+    firebase
+      .firestore()
+      .collection("PetData")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("User deleted!");
+      });
+
+      getPets();
+  };
 
   return (
 
@@ -129,12 +143,18 @@ const PetList = ({ navigation }) => {
                               name="edit"
                               size={30}
                               id="#deleteItemDetails"
-                              onPress={() => navigation.navigate('petupdate')}
+                              onPress={() => {
+                                navigation.navigate("petupdate", {
+                                  pet: pet,
+                                });
+                              }}
                             />
                             <MaterialIcons
                               name="delete"
                               size={30}
-                              onPress={() => deletePet(pet.petid)}
+                              onPress={() => {
+                                showConfirmDialog(id[index]);
+                              }}
                             />
                           </HStack>
                         </View>
