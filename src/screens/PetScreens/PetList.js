@@ -67,7 +67,7 @@ const PetList = ({ navigation }) => {
   const showConfirmDialog = (id) => {
     return Alert.alert(
       "Are your sure?",
-      "Are you sure you want to delete the user?",
+      "Are you sure you want to delete the pet?",
       [
         {
           text: "Yes",
