@@ -63,7 +63,6 @@ const PetList = ({ navigation }) => {
   const deletePet = (id) => {
     firebase.firestore().collection("PetData").doc(id).delete().then(() => {
       console.log("Pet successfully deleted!");
-      setShow(false);
     }).catch((error) => {
       console.error("Error removing pet: ", error);
     });
@@ -77,13 +76,6 @@ const PetList = ({ navigation }) => {
   //     description: inputs.description,
   //     imageUrl: inputs.imageUrl,
   //   }
-
-  //   itemRequest.updateItem(updatedPet, id).then((res) => {
-  //     console.log(res);
-  //     applyToast('Item succesfully update!', 'success');
-  //     window.location.reload();
-  //   })
-  // }
 
   useEffect(() => {
     getPets();
@@ -142,7 +134,7 @@ const PetList = ({ navigation }) => {
                             <MaterialIcons
                               name="delete"
                               size={30}
-                              onPress={() => deletePet(documentId)}
+                              onPress={() => deletePet(pet.petid)}
                             />
                           </HStack>
                         </View>
