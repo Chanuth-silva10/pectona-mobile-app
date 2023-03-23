@@ -121,6 +121,17 @@ export const petProfileStyles = StyleSheet.create({
         textAlign: "center",
         marginVertical: 20,
     },
+    onePetDetailHead: {
+        fontSize: 20,
+        color: colors.text3,
+        marginLeft: 60,
+        marginBottom: 20
+    },
+    onePetDetail: {
+        fontSize: 10,
+        color: colors.text3,
+        marginVertical: 20,
+    },
     icon:{
         position:'absolute',
         top:560,
@@ -194,5 +205,21 @@ export const petProfileStyles = StyleSheet.create({
         margin: 10,
         marginTop: 0,
         alignSelf: 'center',
+    },
+    generateQRbtn: {
+        width: '50%',
+        height: 50,
+        backgroundColor: '#694fad',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        marginTop: 30,
+        alignSelf: 'center',
+    },
+    backArrow: {
+        margin: 30,
+        color: colors.mtg,
     }
 })

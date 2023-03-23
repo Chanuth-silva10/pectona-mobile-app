@@ -11,7 +11,7 @@ import DropDown from "../../components/DropDown/DropDown";
 const UpdatePets = ({ navigation, route }) => {
 
     const { pet } = route.params;
-    console.log(route);
+    console.log("route",route);
 
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
@@ -64,6 +64,27 @@ const UpdatePets = ({ navigation, route }) => {
                 doc.forEach((doc) => {
                     doc.ref.update({
                         color: color,
+                    });
+                });
+            }
+            if (dob !== "") {
+                doc.forEach((doc) => {
+                    doc.ref.update({
+                        dob: dob,
+                    });
+                });
+            }
+            if (spec !== "") {
+                doc.forEach((doc) => {
+                    doc.ref.update({
+                        spec: spec,
+                    });
+                });
+            }
+            if (gen !== "") {
+                doc.forEach((doc) => {
+                    doc.ref.update({
+                        gen: gen,
                     });
                 });
             }
