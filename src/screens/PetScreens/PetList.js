@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Alert, TouchableOpacity } from "react-native";
+import { StatusBar, Alert, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -7,7 +7,7 @@ import { firebase } from "../../../Firebase/firebaseConfig";
 import { View, Text, ScrollView, TextInput, Button } from "react-native";
 import { petProfileStyles } from "./PetProfileStyles.js";
 import Card from "../../components/Card/Card";
-import { HStack, Provider } from '@react-native-material/core';
+import { HStack } from '@react-native-material/core';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -19,9 +19,7 @@ const PetList = ({ navigation }) => {
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
           console.log("no user");
@@ -65,9 +63,6 @@ const PetList = ({ navigation }) => {
     getPets();
     getuserdata();
   }, [userloggeduid]);
-
-  // console.log(petData);
-  // console.log(userloggeduid);
 
   const showConfirmDialog = (id) => {
     return Alert.alert(

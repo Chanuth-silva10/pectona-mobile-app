@@ -166,7 +166,7 @@ export const petProfileStyles = StyleSheet.create({
     },
     createpet:{
         width: '80%',
-        height: 60,
+        height: 50,
         backgroundColor: '#694fad',
         borderRadius: 10,  
         justifyContent: 'center',
