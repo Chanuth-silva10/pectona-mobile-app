@@ -37,9 +37,7 @@ const Pets = ({ navigation }) => {
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
           console.log("no user");
@@ -123,13 +121,6 @@ const Pets = ({ navigation }) => {
       </View>
 
       <ScrollView style={petProfileStyles.containerin}>
-        {/* <Text style={petProfileStyles.head1}>
-          {userdata ? (
-            <Text>{userdata.name}</Text>
-          ) : (
-            "loading"
-          )}
-        </Text> */}
 
         <Text style={petProfileStyles.head1}>
           Create Pet Profile
