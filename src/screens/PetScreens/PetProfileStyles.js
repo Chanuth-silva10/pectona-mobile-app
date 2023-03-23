@@ -75,7 +75,7 @@ export const petProfileStyles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 30,
         marginRight: 30,
-        marginBottom: 40
+        marginBottom: 10
     },
     iconContainer: {
         marginLeft: 50,
@@ -152,5 +152,47 @@ export const petProfileStyles = StyleSheet.create({
     iconContainer: {
         position: "absolute",
         right: 10
+    },
+    createpet:{
+        width: '80%',
+        height: 60,
+        backgroundColor: '#694fad',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        alignSelf: 'center',
+    },
+    btntxt: {
+        fontSize: 20,
+        fontWeight: "400",
+        color: "white",
+        textAlign: "center",
+        padding: 10,
+    },
+    cancelbtn: {
+        width: '80%',
+        height: 50,
+        backgroundColor: '#ccccb3',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        marginTop: 0,
+        alignSelf: 'center',
+    },
+    sumitbtn: {
+        width: '80%',
+        height: 50,
+        backgroundColor: '#694fad',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        marginTop: 0,
+        alignSelf: 'center',
     }
 })
