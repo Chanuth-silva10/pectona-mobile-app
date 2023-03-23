@@ -58,7 +58,32 @@ const PetList = ({ navigation }) => {
     });
   };
 
-  console.log(id);
+  console.log("Pet id", id);
+
+  const deletePet = (id) => {
+    firebase.firestore().collection("PetData").doc(id).delete().then(() => {
+      console.log("Pet successfully deleted!");
+      setShow(false);
+    }).catch((error) => {
+      console.error("Error removing pet: ", error);
+    });
+  }
+
+  // const updatePet = (id) => {
+  //   const updatedPet = {
+  //     name: inputs.name,
+  //     price: inputs.price,
+  //     quantity: inputs.quantity,
+  //     description: inputs.description,
+  //     imageUrl: inputs.imageUrl,
+  //   }
+
+  //   itemRequest.updateItem(updatedPet, id).then((res) => {
+  //     console.log(res);
+  //     applyToast('Item succesfully update!', 'success');
+  //     window.location.reload();
+  //   })
+  // }
 
   useEffect(() => {
     getPets();
@@ -111,12 +136,13 @@ const PetList = ({ navigation }) => {
                             <MaterialIcons
                               name="edit"
                               size={30}
-                            // onPress={() => navigation.navigate(CommonConstants.UPDATE_REMINDER_PATH, { reminderId: item._id })}
+                              id="#deleteItemDetails"
+                              onPress={() => navigation.navigate('petupdate')}
                             />
                             <MaterialIcons
                               name="delete"
                               size={30}
-                            // onPress={() => handleDeleteId(item._id)}
+                              onPress={() => deletePet(documentId)}
                             />
                           </HStack>
                         </View>
