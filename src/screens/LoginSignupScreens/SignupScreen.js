@@ -110,7 +110,6 @@ const SignupScreen = ({ navigation }) => {
           <View style={styles.container}>
             <Text style={styles.head1}>Sign Up</Text>
             {customError !== "" && (
-              // <Text style={styles.errormsg}>{customError}</Text>
               <CustomAlert message={customError} type="error"></CustomAlert>
             )}
             <View style={styles.inputout}>
