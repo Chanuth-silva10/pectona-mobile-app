@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -37,9 +37,7 @@ const Pets = ({ navigation }) => {
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
           console.log("no user");
@@ -101,7 +99,8 @@ const Pets = ({ navigation }) => {
         gender: gen,
         color: color,
         dob: dob,
-        userid: userloggeduid
+        userid: userloggeduid,
+        petid: new Date().getTime().toString(),
       })
       .then(() => {
         console.log('Pet added!');
@@ -122,13 +121,6 @@ const Pets = ({ navigation }) => {
       </View>
 
       <ScrollView style={petProfileStyles.containerin}>
-        {/* <Text style={petProfileStyles.head1}>
-          {userdata ? (
-            <Text>{userdata.name}</Text>
-          ) : (
-            "loading"
-          )}
-        </Text> */}
 
         <Text style={petProfileStyles.head1}>
           Create Pet Profile
@@ -153,20 +145,15 @@ const Pets = ({ navigation }) => {
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Please Enter Pet Date of Birth</Text>
 
         <View style={petProfileStyles.cancelbuttonContainer}>
-          <Button
-            title="Cancel"
-            color="#B6B3B3"
-            onPress={() => navigation.navigate('pets')}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.cancelbtn} onPress={() => navigation.navigate('pets')}>
+            <Text style={petProfileStyles.btntxt}>Cancel</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={petProfileStyles.editbuttonContainer}>
-          <Button
-            title="Submit"
-            onPress={handleSubmit}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.sumitbtn} onPress={handleSubmit}>
+            <Text style={petProfileStyles.btntxt}>Submit</Text>
+          </TouchableOpacity>
         </View>
 
       </ScrollView>

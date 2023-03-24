@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StatusBar, Alert, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -7,8 +7,9 @@ import { firebase } from "../../../Firebase/firebaseConfig";
 import { View, Text, ScrollView, TextInput, Button } from "react-native";
 import { petProfileStyles } from "./PetProfileStyles.js";
 import Card from "../../components/Card/Card";
-import { HStack, Provider } from '@react-native-material/core';
+import { HStack } from '@react-native-material/core';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const PetList = ({ navigation }) => {
 
@@ -18,9 +19,7 @@ const PetList = ({ navigation }) => {
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserloggeduid(user.uid);
         } else {
           console.log("no user");
@@ -58,15 +57,43 @@ const PetList = ({ navigation }) => {
     });
   };
 
-  console.log(id);
+  console.log("Pet id", id);
 
   useEffect(() => {
     getPets();
     getuserdata();
   }, [userloggeduid]);
 
-  console.log(petData);
-  console.log(userloggeduid);
+  const showConfirmDialog = (id) => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to delete the pet?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteItem(id);
+          },
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
+
+  const deleteItem = (id) => {
+    firebase
+      .firestore()
+      .collection("PetData")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("User deleted!");
+      });
+
+    getPets();
+  };
 
   return (
 
@@ -79,12 +106,9 @@ const PetList = ({ navigation }) => {
 
       <ScrollView style={petProfileStyles.containerin}>
         <View style={petProfileStyles.editbuttonContainer}>
-          <Button
-            title="Create a Pet Profile"
-            color="#917DCA"
-            onPress={() => navigation.navigate('petcreation')}
-          >
-          </Button>
+          <TouchableOpacity style={petProfileStyles.createpet} onPress={() => navigation.navigate('petcreation')}>
+            <Text style={petProfileStyles.btntxt}>Create a Pet Profile</Text>
+          </TouchableOpacity>
         </View>
 
 
@@ -101,24 +125,36 @@ const PetList = ({ navigation }) => {
                     <View key={index}>
                       <HStack m={2} spacing={80} >
                         <View>
-                          <Text style={petProfileStyles.lable}>Breed - {pet.breed}</Text>
-                          <Text style={petProfileStyles.lable}>Gender - {pet.gender}</Text>
-                          <Text style={petProfileStyles.lable}>Color - {pet.color}</Text>
-                          <Text style={petProfileStyles.lable}>DOB - {pet.dob}</Text>
-                        </View>
-                        <View style={petProfileStyles.iconContainer}>
                           <HStack m={2} spacing={5}>
                             <MaterialIcons
                               name="edit"
                               size={30}
-                            // onPress={() => navigation.navigate(CommonConstants.UPDATE_REMINDER_PATH, { reminderId: item._id })}
+                              id="#deleteItemDetails"
+                              onPress={() => {
+                                navigation.navigate("petupdate", {
+                                  pet: pet,
+                                });
+                              }}
                             />
                             <MaterialIcons
                               name="delete"
                               size={30}
-                            // onPress={() => handleDeleteId(item._id)}
+                              onPress={() => {
+                                showConfirmDialog(id[index]);
+                              }}
                             />
                           </HStack>
+                        </View>
+                        <View style={petProfileStyles.iconContainer}>
+                          <Ionicons
+                            name="arrow-forward-circle-sharp"
+                            size={30}
+                            onPress={() => {
+                              navigation.navigate("onepet", {
+                                pet: pet,
+                              });
+                            }}
+                          />
                         </View>
                       </HStack>
                     </View>
