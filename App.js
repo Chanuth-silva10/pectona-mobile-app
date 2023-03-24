@@ -6,8 +6,12 @@ import SignupScreen from "./src/screens/LoginSignupScreens/SignupScreen";
 import LoginScreen from "./src/screens/LoginSignupScreens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import Userprofile from "./src/screens/Userprofile";
-import User1 from "./src/screens/User1";
-import User2 from "./src/screens/User2";
+import PetList from "./src/screens/PetScreens/PetList";
+import WalletManagement from "./src/screens/walletManagement/WalletManagement";
+import UserList from "./src/screens/UserScreens/UserList";
+import Pets from "./src/screens/PetScreens/Pets";
+import UpdatePets from "./src/screens/PetScreens/UpdatePet";
+import OnePetDetails from "./src/screens/PetScreens/OnePetDetails";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -51,17 +55,44 @@ export default function App() {
             headerShown: false,
           }}
         />
-
         <Stack.Screen
-          name="user2"
-          component={User2}
+          name="userList"
+          component={UserList}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="pets"
+          component={PetList}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="petcreation"
+          component={Pets}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="petupdate"
+          component={UpdatePets}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="onepet"
+          component={OnePetDetails}
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
           name="user1"
-          component={User1}
+          component={WalletManagement}
           options={{
             headerShown: false,
           }}

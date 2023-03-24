@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import { titles, colors, btn1, hr80 } from "../../globals/style";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,7 +16,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 import { firebase } from "../../../Firebase/firebaseConfig";
+import CustomAlert from "../../components/CustomAlert/CustomAlert";
 
 const SignupScreen = ({ navigation }) => {
   const [emailfocus, setEmailfocus] = useState(false);
@@ -32,7 +38,6 @@ const SignupScreen = ({ navigation }) => {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  // console.log(email);
 
   const [customError, setCustomError] = useState("");
   const [successmsg, setSuccessmsg] = useState(null);
@@ -40,7 +45,6 @@ const SignupScreen = ({ navigation }) => {
   // const [useruid, setUseruid] = useState('');
   const handleSignup = () => {
     if (password != cpassword) {
-      // alert("Password doesn't match");
       setCustomError("Password doesn't match");
       return;
     } else if (phone.length != 10) {
@@ -61,14 +65,12 @@ const SignupScreen = ({ navigation }) => {
               .add({
                 email: email,
                 password: password,
-                // cpassword: cpassword,
                 phone: phone,
                 name: name,
                 address: address,
                 uid: userCredentials?.user?.uid,
               })
               .then(() => {
-                console.log("data added to firestore");
                 setSuccessmsg("User created successfully");
               })
               .catch((error) => {
@@ -104,192 +106,193 @@ const SignupScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {successmsg == null ? (
-        <View style={styles.container}>
-          <Text style={styles.head1}>Sign Up</Text>
-          {customError !== "" && (
-            <Text style={styles.errormsg}>{customError}</Text>
-          )}
-          <View style={styles.inputout}>
-            <AntDesign
-              name="user"
-              size={24}
-              color={namefocus === true ? colors.text1 : colors.text2}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Full Name"
-              onFocus={() => {
-                setEmailfocus(false);
-                setPasswordfocus(false);
-                setShowpassword(false);
-                setNamefocus(true);
-                setPhonefocus(false);
-                setCustomError("");
-              }}
-              onChangeText={(text) => setName(text)}
-            />
-          </View>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.head1}>Sign Up</Text>
+            {customError !== "" && (
+              <CustomAlert message={customError} type="error"></CustomAlert>
+            )}
+            <View style={styles.inputout}>
+              <AntDesign
+                name="user"
+                size={24}
+                color={namefocus === true ? colors.text1 : colors.text2}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your name"
+                onFocus={() => {
+                  setEmailfocus(false);
+                  setPasswordfocus(false);
+                  setShowpassword(false);
+                  setNamefocus(true);
+                  setPhonefocus(false);
+                  setCustomError("");
+                }}
+                onChangeText={(text) => setName(text)}
+              />
+            </View>
 
-          <View style={styles.inputout}>
-            <Entypo
-              name="email"
-              size={24}
-              color={emailfocus === true ? colors.text1 : colors.text2}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onFocus={() => {
-                setEmailfocus(true);
-                setPasswordfocus(false);
-                setShowpassword(false);
-                setNamefocus(false);
-                setPhonefocus(false);
-                setCustomError("");
-              }}
-              onChangeText={(text) => setEmail(text)}
-            />
-          </View>
-          {/*  */}
+            <View style={styles.inputout}>
+              <Entypo
+                name="email"
+                size={24}
+                color={emailfocus === true ? colors.text1 : colors.text2}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your email"
+                onFocus={() => {
+                  setEmailfocus(true);
+                  setPasswordfocus(false);
+                  setShowpassword(false);
+                  setNamefocus(false);
+                  setPhonefocus(false);
+                  setCustomError("");
+                }}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </View>
+            {/*  */}
 
-          <View style={styles.inputout}>
-            <Feather
-              name="smartphone"
-              size={24}
-              color={phonefocus === true ? colors.text1 : colors.text2}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              onFocus={() => {
-                setEmailfocus(false);
-                setPasswordfocus(false);
-                setShowpassword(false);
-                setNamefocus(false);
-                setPhonefocus(true);
-                setCustomError("");
-              }}
-              onChangeText={(text) => setPhone(text)}
-            />
-          </View>
+            <View style={styles.inputout}>
+              <Feather
+                name="smartphone"
+                size={24}
+                color={phonefocus === true ? colors.text1 : colors.text2}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                onFocus={() => {
+                  setEmailfocus(false);
+                  setPasswordfocus(false);
+                  setShowpassword(false);
+                  setNamefocus(false);
+                  setPhonefocus(true);
+                  setCustomError("");
+                }}
+                onChangeText={(text) => setPhone(text)}
+              />
+            </View>
 
-          {/* password start */}
-          <View style={styles.inputout}>
-            <MaterialCommunityIcons
-              name="lock-outline"
-              size={24}
-              color={passwordfocus == true ? colors.text1 : colors.text2}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              onFocus={() => {
-                setEmailfocus(false);
-                setPasswordfocus(true);
-                setShowpassword(false);
-                setNamefocus(false);
-                setPhonefocus(false);
-                setCustomError("");
-              }}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={showpassword === false ? true : false}
-            />
+            <View style={styles.inputout}>
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={24}
+                color={passwordfocus == true ? colors.text1 : colors.text2}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your password"
+                onFocus={() => {
+                  setEmailfocus(false);
+                  setPasswordfocus(true);
+                  setShowpassword(false);
+                  setNamefocus(false);
+                  setPhonefocus(false);
+                  setCustomError("");
+                }}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={showpassword === false ? true : false}
+              />
 
-            <Octicons
-              name={showpassword == false ? "eye-closed" : "eye"}
-              size={24}
-              color="black"
-              onPress={() => setShowpassword(!showpassword)}
-            />
-          </View>
-          {/*  */}
-          <View style={styles.inputout}>
-            <MaterialCommunityIcons
-              name="lock-outline"
-              size={24}
-              color={cpasswordfocus == true ? colors.text1 : colors.text2}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              onFocus={() => {
-                setEmailfocus(false);
-                setPasswordfocus(false);
-                setShowpassword(true);
-                setNamefocus(false);
-                setPhonefocus(false);
-                setCustomError("");
-              }}
-              onChangeText={(text) => setcPassword(text)}
-              secureTextEntry={showcpassword === false ? true : false}
-            />
+              <Octicons
+                name={showpassword == false ? "eye-closed" : "eye"}
+                size={24}
+                color="black"
+                onPress={() => setShowpassword(!showpassword)}
+              />
+            </View>
 
-            <Octicons
-              name={showcpassword == false ? "eye-closed" : "eye"}
-              size={24}
-              color="black"
-              onPress={() => setShowcpassword(!showcpassword)}
-            />
-          </View>
-          {/* password end */}
+            <View style={styles.inputout}>
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={24}
+                color={cpasswordfocus == true ? colors.text1 : colors.text2}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Re-enter your password"
+                onFocus={() => {
+                  setEmailfocus(false);
+                  setPasswordfocus(true);
+                  setShowpassword(true);
+                  setNamefocus(false);
+                  setPhonefocus(false);
+                  setCustomError("");
+                }}
+                onChangeText={(text) => setcPassword(text)}
+                secureTextEntry={showcpassword === false ? true : false}
+              />
 
-          <Text style={styles.address}>Please enter your address</Text>
-          <View style={styles.inputout}>
-            <TextInput
-              style={styles.input1}
-              placeholder="Enter your Address"
-              onChangeText={(text) => setAddress(text)}
-              onPress={() => {
-                setEmailfocus(false);
-                setPasswordfocus(false);
-                setShowpassword(false);
-                setNamefocus(false);
-                setPhonefocus(false);
-                setCustomError("");
-              }}
-            />
-          </View>
+              <Octicons
+                name={showcpassword == false ? "eye-closed" : "eye"}
+                size={24}
+                color="black"
+                onPress={() => setShowcpassword(!showcpassword)}
+              />
+            </View>
+            {/* password end */}
 
-          <TouchableOpacity style={btn1} onPress={() => handleSignup()}>
-            <Text
-              style={{
-                color: colors.col1,
-                fontSize: titles.btntxt,
-                fontWeight: "bold",
-              }}
-            >
-              Sign up
-            </Text>
-          </TouchableOpacity>
+            <Text style={styles.address}>Please enter your address</Text>
+            <View style={styles.inputout}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your address"
+                onChangeText={(text) => setAddress(text)}
+                onPress={() => {
+                  setEmailfocus(false);
+                  setPasswordfocus(false);
+                  setShowpassword(false);
+                  setNamefocus(false);
+                  setPhonefocus(false);
+                  setCustomError("");
+                }}
+              />
+            </View>
 
-          <Text style={styles.or}>OR</Text>
-          <Text style={styles.gftxt}>Sign In With </Text>
-
-          <View style={styles.gf}>
-            <TouchableOpacity>
-              <View style={styles.gficon}>
-                <AntDesign name="google" size={24} color="#EA4335" />
-              </View>
+            <TouchableOpacity style={btn1} onPress={() => handleSignup()}>
+              <Text
+                style={{
+                  color: colors.col1,
+                  fontSize: titles.btntxt,
+                  fontWeight: "bold",
+                }}
+              >
+                Sign up
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.gficon}>
-                <FontAwesome5 name="facebook-f" size={24} color="#4267B2" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={hr80}></View>
-          <Text>
-            Already have an account?
-            <Text
-              style={styles.signup}
-              onPress={() => navigation.navigate("login")}
-            >
-              {" "}
-              Sign In
+            <Text style={styles.or}>OR</Text>
+            <Text style={styles.gftxt}>Sign In With </Text>
+
+            <View style={styles.gf}>
+              <TouchableOpacity>
+                <View style={styles.gficon}>
+                  <AntDesign name="google" size={24} color="#EA4335" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <View style={styles.gficon}>
+                  <FontAwesome5 name="facebook-f" size={24} color="#4267B2" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={hr80}></View>
+            <Text style={styles.ahc}>
+              Already have an account?
+              <Text
+                style={styles.signup}
+                onPress={() => navigation.navigate("login")}
+              >
+                {" "}
+                Sign In
+              </Text>
             </Text>
-          </Text>
-        </View>
+          </View>
+        </ScrollView>
       ) : (
         <View style={styles.container1}>
           <Text style={styles.successmessage}>{successmsg}</Text>
@@ -328,12 +331,13 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: windowWidth,
     alignItems: "center",
+    marginTop: windowHeight * 0.05,
   },
   container1: {
     flex: 1,
-    width: "100%",
+    width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 60,
@@ -346,7 +350,7 @@ const styles = StyleSheet.create({
   },
   inputout: {
     flexDirection: "row",
-    width: "80%",
+    width: windowWidth * 0.8,
     marginVertical: 9,
     backgroundColor: "white",
     borderRadius: 10,
@@ -357,7 +361,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 18,
     marginLeft: 10,
-    width: "80%",
+    width: windowWidth * 0.8,
   },
   forgot: {
     color: colors.text2,
@@ -379,7 +383,7 @@ const styles = StyleSheet.create({
   },
   gficon: {
     backgroundColor: "white",
-    width: 50,
+    width: windowWidth * 0.3,
     marginHorizontal: 10,
     borderRadius: 10,
     padding: 10,
@@ -414,6 +418,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+  },
+  ahc: {
+    marginBottom: windowHeight * 0.05,
   },
 });
 
