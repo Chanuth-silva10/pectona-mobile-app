@@ -89,7 +89,7 @@ const PetList = ({ navigation }) => {
       .doc(id)
       .delete()
       .then(() => {
-        console.log("User deleted!");
+        console.log("Pet deleted!");
       });
 
     getPets();
