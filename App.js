@@ -11,6 +11,7 @@ import WalletManagement from "./src/screens/walletManagement/WalletManagement";
 import UserList from "./src/screens/UserScreens/UserList";
 import Pets from "./src/screens/PetScreens/Pets";
 import UpdatePets from "./src/screens/PetScreens/UpdatePet";
+import OnePetDetails from "./src/screens/PetScreens/OnePetDetails";
 import AppointmentList from "./src/screens/AppointmentScreens/AppointmentList";
 import MakeAppointment from "./src/screens/AppointmentScreens/MakeAppointment";
 
@@ -80,6 +81,13 @@ export default function App() {
         <Stack.Screen
           name="petupdate"
           component={UpdatePets}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+        name="onepet"
+          component={OnePetDetails}
           options={{
             headerShown: false,
           }}
