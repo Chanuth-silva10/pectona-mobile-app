@@ -11,6 +11,8 @@ import WalletManagement from "./src/screens/walletManagement/WalletManagement";
 import UserList from "./src/screens/UserScreens/UserList";
 import Pets from "./src/screens/PetScreens/Pets";
 import UpdatePets from "./src/screens/PetScreens/UpdatePet";
+import AppointmentList from "./src/screens/AppointmentScreens/AppointmentList";
+import MakeAppointment from "./src/screens/AppointmentScreens/MakeAppointment";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -78,6 +80,20 @@ export default function App() {
         <Stack.Screen
           name="petupdate"
           component={UpdatePets}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="appointments"
+          component={AppointmentList}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="make_appointment"
+          component={MakeAppointment}
           options={{
             headerShown: false,
           }}
