@@ -11,7 +11,7 @@ import DropDown from "../../components/DropDown/DropDown";
 const UpdatePets = ({ navigation, route }) => {
 
     const { pet } = route.params;
-    console.log("route",route);
+    console.log("route", route);
 
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
@@ -19,6 +19,10 @@ const UpdatePets = ({ navigation, route }) => {
     const [dob, setDob] = useState('');
     const [spec, setSpec] = useState('');
     const [gen, setGen] = useState('');
+
+    const [nameError, setNameError] = useState('');
+    const [breedError, setBreedError] = useState('');
+    const [specError, setSpecError] = useState('');
 
     const [species, setSpecies] = useState([
         { label: 'Dog', value: 'Dog' },
@@ -30,6 +34,27 @@ const UpdatePets = ({ navigation, route }) => {
         { label: 'Female', value: 'Female' },
     ]);
 
+    const nameValidator = () => {
+
+        if (name.length == 0) {
+          setNameError('Pet Name is required');
+        } else if (name.length < 3) {
+          setNameError('Pet Name must be atleast 3 characters');
+        } else if (name.length >= 3) {
+          setNameError('');
+        }
+      }
+    
+      const breedValidator = () => {
+        if (breed.length == 0) {
+          setBreedError('Pet Breed is required');
+        } else if (breed.length < 5) {
+          setBreedError('Pet Breed must has atleast 5 characters');
+        } else if (name.length >= 5) {
+          setBreedError('');
+        }
+      }
+
     useEffect(() => {
         setName(pet.name);
         setBreed(pet.breed);
@@ -40,6 +65,7 @@ const UpdatePets = ({ navigation, route }) => {
     }, []);
 
     const updatePet = async () => {
+        if(nameError == '' && breedError == '' && specError == '') {
         const docRef = firebase
             .firestore()
             .collection("PetData")
@@ -93,6 +119,9 @@ const UpdatePets = ({ navigation, route }) => {
         } else {
             console.log("no pet data");
         }
+    } else {
+        alert("Please resolve the errors");
+    }
     };
 
     return (
@@ -108,23 +137,29 @@ const UpdatePets = ({ navigation, route }) => {
                     Update Pet Profile
                 </Text>
 
-                <TextInput variant="outlined" placeholder={name} style={petProfileStyles.inputContainer} value={name} onChangeText={setName}></TextInput>
+                <TextInput variant="outlined" placeholder={name} style={petProfileStyles.inputContainer} value={name} onChangeText={setName} maxLength={15} onBlur={() => nameValidator()}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet name</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}>{nameError}</Text>
 
                 <DropDown data={species} disable={true} value={spec} onChange={setSpec} />
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Species</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
-                <TextInput variant="outlined" placeholder={breed} style={petProfileStyles.inputContainer} value={breed} onChangeText={setBreed}></TextInput>
+                <TextInput variant="outlined" placeholder={breed} style={petProfileStyles.inputContainer} value={breed} onChangeText={setBreed} maxLength={15} onBlur={() => breedValidator()}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Breed</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}>{breedError}</Text>
 
                 <DropDown data={gender} disable={true} setValue={setGen} value={gen} onChange={setGen} />
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Gender</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
                 <TextInput variant="outlined" placeholder={color} style={petProfileStyles.inputContainer} value={color} onChangeText={setColor}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Update Pet Color</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
                 <TextInput variant="outlined" placeholder={dob} style={petProfileStyles.inputContainer} value={dob} onChangeText={setDob}></TextInput>
                 <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Update Pet Date of Birth</Text>
+                <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
                 <View style={petProfileStyles.cancelbuttonContainer}>
                     <TouchableOpacity style={petProfileStyles.cancelbtn} onPress={() => navigation.navigate('pets')}>
@@ -133,7 +168,7 @@ const UpdatePets = ({ navigation, route }) => {
                 </View>
 
                 <View style={petProfileStyles.editbuttonContainer}>
-                    <TouchableOpacity style={petProfileStyles.sumitbtn}  onPress={() => updatePet()}>
+                    <TouchableOpacity style={petProfileStyles.sumitbtn} onPress={() => updatePet()}>
                         <Text style={petProfileStyles.btntxt}>Submit</Text>
                     </TouchableOpacity>
                 </View>

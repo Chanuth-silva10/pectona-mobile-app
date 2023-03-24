@@ -12,6 +12,17 @@ export const petProfileStyles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 8,
     },
+    inputContainerTwo: {
+        height: 50,
+        width: '91%',
+        margin: '5%',
+        marginTop: 20,
+        backgroundColor: 'white',
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 8,
+    },
     inputContainerUpdateProfile: {
         height: 50,
         width: '91%',
@@ -40,6 +51,15 @@ export const petProfileStyles = StyleSheet.create({
         fontStyle: 'normal',
         fontWeight: '500',
         color: 'rgba(0, 0, 0, 0.6)'
+    },
+    textLableContainerTwo: {
+        marginLeft: '5%',
+        fontSize: 14,
+        lineHeight: 16,
+        font: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        color: 'red'
     },
     userImageContainer: {
         width: 150,
