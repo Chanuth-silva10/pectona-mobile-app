@@ -56,6 +56,15 @@ const AppointmentList = ({ navigation }) => {
     });
   };
 
+  const getPetDetails = async (id) => {
+    const petRef = firebase.firestore().collection("PettData").where("name", "==", id)
+    petRef.onSnapshot((snapshot) => {
+      return snapshot.docs.map((doc) => doc.data());
+      //setAppointmentData(snapshot.docs.map((doc) => doc.data()));
+      //setID(snapshot.docs.map((doc) => doc.id));
+    });
+  };
+
   console.log("Appointment id", id);
 
   useEffect(() => {
@@ -105,17 +114,11 @@ const AppointmentList = ({ navigation }) => {
 
       <ScrollView style={appointmentStyles.containerin}>
       {loggeduserid == "sEPcC2qC6gTXZWG7Qm8z1u3oX1x1" ? 
-          <View style={appointmentStyles.editbuttonContainer}>
-            <Text style={appointmentStyles.head1}>
-              Hello {loggeduserid}
-            </Text>
-            <Button
-              title="Make an appointment"
-              color="#917DCA"
-              onPress={() => navigation.navigate('make_appointment')}
-            >
-            </Button>
-          </View>
+          <><Text style={appointmentStyles.head1}>
+            Hello Piyo
+          </Text><Text style={appointmentStyles.para}>
+              You have the following appointments:
+            </Text></>
         : null}
 
 
@@ -156,7 +159,14 @@ const AppointmentList = ({ navigation }) => {
           })
         }
 
-
+<View style={appointmentStyles.editbuttonContainer}>
+            <Button
+              title="Make an appointment"
+              color="#917DCA"
+              onPress={() => navigation.navigate('make_appointment')}
+            >
+            </Button>
+          </View>
       </ScrollView>
     </View>
   );

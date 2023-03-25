@@ -121,6 +121,12 @@ export const appointmentStyles = StyleSheet.create({
         textAlign: "center",
         marginVertical: 20,
     },
+    para: {
+        fontSize: 20,
+        color: colors.mtg,
+        textAlign: "center",
+        marginVertical: 20,
+    },
     icon:{
         position:'absolute',
         top:560,
