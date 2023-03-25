@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StatusBar, Alert, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -7,13 +7,13 @@ import { firebase } from "../../../Firebase/firebaseConfig";
 import { View, Text, ScrollView, TextInput, Button } from "react-native";
 import { appointmentStyles } from "./AppointmentStyles.js";
 import Card from "../../components/Card/Card";
-import { HStack, Provider } from '@react-native-material/core';
+import { HStack } from '@react-native-material/core';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const AppointmentList = ({ navigation }) => {
 
   const [loggeduserid, setLoggeduserid] = useState(null);
-  const [appointmentdata, setAppointmentdata] = useState([]);
+  const [userdata, setUserdata] = useState(null);
 
   useEffect(() => {
     const checklogin = () => {
@@ -28,24 +28,71 @@ const AppointmentList = ({ navigation }) => {
     checklogin();
   }, []);
 
-  console.log("Loggeduserid: " + loggeduserid);
+  const getuserdata = async () => {
+    const docRef = firebase
+      .firestore()
+      .collection("UserData")
+      .where("uid", "==", loggeduserid);
+    const doc = await docRef.get();
+    if (!doc.empty) {
+      doc.forEach((doc) => {
+        setUserdata(doc.data());
+      });
+    } else {
+      console.log("no user data");
+    }
+  };
+
+  console.log(userdata);
+
+  const [appointmentData, setAppointmentData] = useState([]);
+  const [id, setID] = useState(null);
 
   const getAppointments = async () => {
-    const appointmentsRef = await firebase.firestore().collection("AppointmentData").where("doctorid", "==", loggeduserid).get();
-    console.log ("appointmentsRef: " + appointmentsRef.empty);
+    const appointmentsRef = firebase.firestore().collection("AppointmentData")
     appointmentsRef.onSnapshot((snapshot) => {
-      setAppointmentdata(snapshot.docs.map((doc) => doc.data()));
+      setAppointmentData(snapshot.docs.map((doc) => doc.data()));
+      setID(snapshot.docs.map((doc) => doc.id));
     });
   };
 
-  console.log(appointmentdata);
+  console.log("Appointment id", id);
 
   useEffect(() => {
     getAppointments();
+    getuserdata();
   }, [loggeduserid]);
 
-  console.log(appointmentdata);
-  console.log(loggeduserid);
+  const showConfirmDialog = (id) => {
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to cancel the appointment?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteItem(id);
+          },
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  };
+
+  const deleteItem = (id) => {
+    firebase
+      .firestore()
+      .collection("AppointmentData")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Appointment is cancelled!");
+      });
+
+    getAppointments();
+  };
 
   return (
 
@@ -57,65 +104,62 @@ const AppointmentList = ({ navigation }) => {
       </View>
 
       <ScrollView style={appointmentStyles.containerin}>
-        <View style={appointmentStyles.editbuttonContainer}>
-          <Button
-            title="Make an appointment"
-            color="#917DCA"
-            onPress={() => navigation.navigate('make_appointment')}
-          >
-          </Button>
-        </View>
+      {loggeduserid == "sEPcC2qC6gTXZWG7Qm8z1u3oX1x1" ? 
+          <View style={appointmentStyles.editbuttonContainer}>
+            <Text style={appointmentStyles.head1}>
+              Hello {loggeduserid}
+            </Text>
+            <Button
+              title="Make an appointment"
+              color="#917DCA"
+              onPress={() => navigation.navigate('make_appointment')}
+            >
+            </Button>
+          </View>
+        : null}
 
 
         {
-          appointmentdata.map((appointment, index) => {
+          appointmentData.map((appointment, index) => {
 
-            console.log("Inside appointmentdata map")
             return (
 
-              appointment.doctorid == loggeduserid ?
+              appointment.userid == loggeduserid ?
 
-                <Card
-                  title={`${appointment.date}`}
-                  children={
-                    <View key={index}>
-                      <HStack m={2} spacing={80} >
-                        <View>
-                          <Text style={appointmentStyles.lable}>Doctor - {appointment.doctorid}</Text>
-                          <Text style={appointmentStyles.lable}>Pet - {appointment.petid}</Text>
-                          <Text style={appointmentStyles.lable}>Date - {appointment.date}</Text>
-                        </View>
-                        <View style={appointmentStyles.iconContainer}>
-                          <HStack m={2} spacing={5}>
-                            <MaterialIcons
-                              name="edit"
-                              size={30}
-                            // onPress={() => navigation.navigate(CommonConstants.UPDATE_REMINDER_PATH, { reminderId: item._id })}
-                            />
-                            <MaterialIcons
-                              name="delete"
-                              size={30}
-                            // onPress={() => handleDeleteId(item._id)}
-                            />
-                          </HStack>
-                        </View>
+              <Card
+              title={`${appointment.appointmentid}`}
+              children={
+                <View key={index}>
+                  <HStack m={2} spacing={80} >
+                    <View>
+                      <Text style={appointmentStyles.lable}>Doctor - {appointment.doctorid}</Text>
+                      <Text style={appointmentStyles.lable}>Pet - {appointment.petid}</Text>
+                      <Text style={appointmentStyles.lable}>Date - {appointment.date}</Text>
+                    </View>
+                    <View style={appointmentStyles.iconContainer}>
+                      <HStack m={2} spacing={5}>
+                        <MaterialIcons
+                          name="cancel"
+                          size={30}
+                          onPress={() => {
+                            showConfirmDialog(id[index]);
+                          }}
+                        />
                       </HStack>
                     </View>
-                  }
-                />
-
-                :
-
-                null
+                  </HStack>
+                </View>
+              }
+            />
+          : null
             )
           })
         }
-        
+
 
       </ScrollView>
     </View>
   );
-
 }
 
 export default AppointmentList;

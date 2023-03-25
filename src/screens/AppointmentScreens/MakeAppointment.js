@@ -17,8 +17,12 @@ const Appointments = ({ navigation }) => {
   const [date, setDate] = useState('');
 
   const [loggeduserid, setLoggeduserid] = useState(null);
-  const [doctordata, setDoctordata] = useState(null);
-  const [petdata, setPetdata] = useState(null);
+  const [doctordata, setDoctordata] = useState([]);
+  const [doctorname, setDoctorname] = useState([]);
+  const [petdata, setPetdata] = useState([]);
+  const [petname, setPetname] = useState([]);
+
+  const [selectedpetid, setSelectedpetid] = useState(null);
 
   useEffect(() => {
     const checklogin = () => {
@@ -38,30 +42,33 @@ const Appointments = ({ navigation }) => {
   console.log(loggeduserid);
 
   const getDoctors = async () => {
-    const docRef = await firebase.firestore().collection("UserData").where("type", "==", "doctor").get();
-    console.log ("docRef: " + docRef.empty);
+    const docRef = firebase.firestore().collection("UserData");
+    //console.log ("docRef: " + docRef.size());
     docRef.onSnapshot((snapshot) => {
       setDoctordata(snapshot.docs.map((doc) => doc.data()));
+      setDoctorname(snapshot.docs.map((doc) => doc.id));
     });
   };
 
-  console.log("doctordata: " + doctordata);
+  console.log("doctorname: " + doctordata.map((doctor, index) => {return (doctor.name)}));
 
   const getPets = async () => {
-    const petsRef = await firebase.firestore().collection("PetData").get();
-    console.log ("petsRef: " + petsRef.empty);
+    const petsRef = firebase.firestore().collection("PetData");
+    //console.log ("petsRef: " + petsRef.size());
     petsRef.onSnapshot((snapshot) => {
       setPetdata(snapshot.docs.map((doc) => doc.data()));
+      setPetname(snapshot.docs.map((doc) => doc.id));
     });
   };
 
-  console.log("petdata: " + petdata);
+  console.log("petname: " + petdata.map((pet, index) => {return (pet.petid)}));
 
   const handleDoctor = (e) => {
     setDoctorid(e.nativeEvent.text)
   }
 
   const handlePet = (e) => {
+    console.log("selectedpetid :" + selectedpetid);
     setPetid(e.nativeEvent.text)
   }
 
@@ -74,8 +81,9 @@ const Appointments = ({ navigation }) => {
     firebase.firestore()
       .collection('AppointmentData')
       .add({
+        appointmentid: Math.floor(Math.random() * 100) + 1,
         doctorid: doctorid,
-        petid: petid,
+        petid: selectedpetid,
         date: date,
         userid: loggeduserid
       })
@@ -99,16 +107,9 @@ const Appointments = ({ navigation }) => {
       </View>
 
       <ScrollView style={appointmentStyles.containerin}>
-        {<Text style={appointmentStyles.head1}>
-          {doctordata ? (
-            <Text>{doctordata.Appointments}</Text>
-          ) : (
-            "loading"
-          )}
-        </Text>}
-
+        
         <Text style={appointmentStyles.head1}>
-          Make Appointment
+          Make an Appointment
         </Text>
 
         <TextInput variant="outlined" placeholder="Enter doctor id" style={appointmentStyles.inputContainer} onChange={handleDoctor}></TextInput>
