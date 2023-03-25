@@ -19,6 +19,10 @@ const Pets = ({ navigation }) => {
   const [spec, setSpec] = useState('');
   const [gen, setGen] = useState('');
 
+  const [nameError, setNameError] = useState('');
+  const [breedError, setBreedError] = useState('');
+  const [specError, setSpecError] = useState('');
+
   const [species, setSpecies] = useState([
     { label: 'Dog', value: 'Dog' },
     { label: 'Cat', value: 'Cat' },
@@ -90,7 +94,8 @@ const Pets = ({ navigation }) => {
 
   const handleSubmit = () => {
 
-    firebase.firestore()
+    if(nameError == '' && breedError == '' && specError == '') {
+      firebase.firestore()
       .collection('PetData')
       .add({
         name: name,
@@ -106,6 +111,30 @@ const Pets = ({ navigation }) => {
         console.log('Pet added!');
         navigation.navigate('pets');
       });
+    } else {
+      alert("Please resolve the errors");
+    }
+  }
+
+  const nameValidator = () => {
+
+    if (name.length == 0) {
+      setNameError('Pet Name is required');
+    } else if (name.length < 3) {
+      setNameError('Pet Name must be atleast 3 characters');
+    } else if (name.length >= 3) {
+      setNameError('');
+    }
+  }
+
+  const breedValidator = () => {
+    if (breed.length == 0) {
+      setBreedError('Pet Breed is required');
+    } else if (breed.length < 5) {
+      setBreedError('Pet Breed must has atleast 5 characters');
+    } else if (name.length >= 5) {
+      setBreedError('');
+    }
   }
 
   useEffect(() => {
@@ -126,20 +155,25 @@ const Pets = ({ navigation }) => {
           Create Pet Profile
         </Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Name" style={petProfileStyles.inputContainer} onChange={handleName}></TextInput>
-        <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet name</Text>
+        <TextInput variant="outlined" placeholder="Enter Pet Name" style={petProfileStyles.inputContainer} onChange={handleName} maxLength={15} onBlur={() => nameValidator()}></TextInput>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet Name</Text>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}>{nameError}</Text>
 
-        <DropDown data={species} disable={true} onChange={handleSpecies} setValue={setSpec} />
+        <DropDown data={species} disable={true} onChange={handleSpecies} setValue={setSpec} onBlur={() => specValidator()}/>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Select Pet Species</Text>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Breed" style={petProfileStyles.inputContainer} onChange={handleBreed}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Breed" style={petProfileStyles.inputContainer} onChange={handleBreed} maxLength={15} onBlur={() => breedValidator()}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet Breed</Text>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}>{breedError}</Text>
 
         <DropDown data={gender} disable={true} onChange={handleGender} setValue={setGen} />
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Select Pet Gender</Text>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
-        <TextInput variant="outlined" placeholder="Enter Pet Color" style={petProfileStyles.inputContainer} onChange={handleColor}></TextInput>
+        <TextInput variant="outlined" placeholder="Enter Pet Color" style={petProfileStyles.inputContainer} onChange={handleColor} maxLength={15}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainer}>Please Enter Pet Color</Text>
+        <Text variant='subtitle 2' style={petProfileStyles.textLableContainerTwo}></Text>
 
         <TextInput variant="outlined" placeholder="Enter Pet Date Of Birth" style={petProfileStyles.inputContainer} onChange={handleDob}></TextInput>
         <Text variant='subtitle 2' style={petProfileStyles.textLableContainerLast}>Please Enter Pet Date of Birth</Text>
