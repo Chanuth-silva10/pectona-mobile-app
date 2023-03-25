@@ -18,11 +18,7 @@ const Appointments = ({ navigation }) => {
 
   const [loggeduserid, setLoggeduserid] = useState(null);
   const [doctordata, setDoctordata] = useState([]);
-  const [doctorname, setDoctorname] = useState([]);
   const [petdata, setPetdata] = useState([]);
-  const [petname, setPetname] = useState([]);
-
-  const [selectedpetid, setSelectedpetid] = useState(null);
 
   useEffect(() => {
     const checklogin = () => {
@@ -42,11 +38,10 @@ const Appointments = ({ navigation }) => {
   console.log(loggeduserid);
 
   const getDoctors = async () => {
-    const docRef = firebase.firestore().collection("UserData");
+    const docRef = firebase.firestore().collection("UserData")
     //console.log ("docRef: " + docRef.size());
     docRef.onSnapshot((snapshot) => {
       setDoctordata(snapshot.docs.map((doc) => doc.data()));
-      setDoctorname(snapshot.docs.map((doc) => doc.id));
     });
   };
 
@@ -83,7 +78,7 @@ const Appointments = ({ navigation }) => {
       .add({
         appointmentid: Math.floor(Math.random() * 100) + 1,
         doctorid: doctorid,
-        petid: selectedpetid,
+        petid: petid,
         date: date,
         userid: loggeduserid
       })
@@ -111,6 +106,12 @@ const Appointments = ({ navigation }) => {
         <Text style={appointmentStyles.head1}>
           Make an Appointment
         </Text>
+
+        <DropDown data={doctors} disable={true} onChange={handleDoctor} setValue={setDoctorid} />
+        <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please select a doctor</Text>
+
+        <DropDown data={pets} disable={true} onChange={handlePet} setValue={setPetid} />
+        <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please select a pet</Text>
 
         <TextInput variant="outlined" placeholder="Enter doctor id" style={appointmentStyles.inputContainer} onChange={handleDoctor}></TextInput>
         <Text variant='subtitle 2' style={appointmentStyles.textLableContainerLast}>Please enter doctor id</Text>
