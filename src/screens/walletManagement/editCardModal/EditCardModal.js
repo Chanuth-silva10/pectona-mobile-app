@@ -62,7 +62,7 @@ const EditCardModal = ({ item, isOpen, onClose, getData, setIsLoading }) => {
               <View>
                 <Text style={styles.fieldHeader}>Card Number</Text>
                 <TextInput
-                  placeholder={item.cardNumber}
+                  placeholder={`${item.cardNumber}`}
                   style={styles.cardNumberInput}
                   keyboardType={"numeric"}
                   maxLength={8}
