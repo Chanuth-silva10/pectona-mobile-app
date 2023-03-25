@@ -15,11 +15,11 @@ import { Octicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-
 import { firebase } from "../../../Firebase/firebaseConfig";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const LoginScreen = ({ navigation }) => {
   const [emailfocus, setEmailfocus] = useState(false);
@@ -31,7 +31,6 @@ const LoginScreen = ({ navigation }) => {
   const [customerror, setcustomError] = useState("");
 
   const handlelogin = () => {
-    // console.log(email, password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)

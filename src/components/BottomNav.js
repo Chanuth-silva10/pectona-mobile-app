@@ -41,7 +41,7 @@ const BottomNav = ({ navigation }) => {
           color="black"
           style={styles.icon1}
           onPress={() => {
-            navigation.navigate("user1");
+            navigation.navigate("appointments");
           }}
         />
       </View>
