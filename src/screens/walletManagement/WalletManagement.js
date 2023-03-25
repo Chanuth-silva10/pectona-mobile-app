@@ -15,6 +15,7 @@ import { FlatList, Text } from "react-native";
 import { Pressable } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import EditCardModal from "./editCardModal/EditCardModal";
+import { Alert } from "react-native";
 
 const WalletManagement = ({ navigation }) => {
   const [walletData, setWalletData] = useState([""]);
@@ -67,11 +68,25 @@ const WalletManagement = ({ navigation }) => {
             <Text style={styles.cardText}>CVN : {item.cvn}</Text>
           </View>
         </Pressable>
-        <Pressable onPress={() => deleteCard(item.id)}>
+        <Pressable onPress={() => deleteCardConfirmation(item.id)}>
           <MaterialIcons name="delete" size={30} />
         </Pressable>
       </View>
     );
+  };
+
+  const deleteCardConfirmation = async (deleteID) => {
+    return Alert.alert("Confirmation required", "Delete card?", [
+      {
+        text: "No",
+      },
+      {
+        text: "Yes",
+        onPress: () => {
+          deleteCard(deleteID);
+        },
+      },
+    ]);
   };
 
   const deleteCard = async (deleteID) => {
@@ -114,7 +129,10 @@ const WalletManagement = ({ navigation }) => {
         />
       )}
       {walletData.length ? (
-        <Pressable style={styles.addButton} onPress={() => setIsOpen(true)}>
+        <Pressable
+          style={({ pressed }) => (pressed ? styles.pressed : styles.addButton)}
+          onPress={() => setIsOpen(true)}
+        >
           <AntDesign
             name="plus"
             size={50}
@@ -161,7 +179,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "cyan",
+    backgroundColor: "#e6eeff",
     margin: 10,
     padding: 20,
     height: 150,
@@ -189,8 +207,21 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 80,
   },
+  pressed: {
+    height: 60,
+    width: 60,
+    borderRadius: 40,
+    backgroundColor: colors.mtg,
+    position: "absolute",
+    right: 10,
+    bottom: 80,
+    opacity: 0.5,
+  },
   addIcon: {
     marginLeft: 5,
     marginTop: 5,
+  },
+  flatList: {
+    backgroundColor: "white",
   },
 });

@@ -12,16 +12,16 @@ import { firebase } from "../../../../Firebase/firebaseConfig";
 import { useState } from "react";
 
 const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryMonth, setExpiryMonth] = useState("");
-  const [expiryYear, setExpiryYear] = useState("");
-  const [cvn, setCVN] = useState("");
+  const [cardNumber, setCardNumber] = useState(12345678);
+  const [expiryMonth, setExpiryMonth] = useState(12);
+  const [expiryYear, setExpiryYear] = useState(1999);
+  const [cvn, setCVN] = useState(123);
   const saveWallet = async () => {
     setIsLoading(true);
     const db = firebase.firestore().collection("CardWallet");
     const cardToSave = {
       id: new Date(),
-      cardType: "debit",
+      cardType: "Debit",
       cardNumber: cardNumber,
       expiryMonth: expiryMonth,
       expiryYear: expiryYear,
