@@ -19,9 +19,7 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
-        // console.log(user);
         if (user) {
-          // navigation.navigate('home');
           setUserlogged(user);
         } else {
           console.log("no user");
