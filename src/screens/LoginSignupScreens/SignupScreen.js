@@ -9,18 +9,15 @@ import {
   ScrollView,
 } from "react-native";
 import { titles, colors, btn1, hr80 } from "../../globals/style";
-import { AntDesign } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
+import { Feather,Entypo, MaterialCommunityIcons, FontAwesome5 ,AntDesign, Octicons} from "@expo/vector-icons";
 
 import { firebase } from "../../../Firebase/firebaseConfig";
 import CustomAlert from "../../components/CustomAlert/CustomAlert";
+
+//Get the Height and Width of the Device
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 
 const SignupScreen = ({ navigation }) => {
   const [emailfocus, setEmailfocus] = useState(false);
@@ -42,8 +39,8 @@ const SignupScreen = ({ navigation }) => {
   const [customError, setCustomError] = useState("");
   const [successmsg, setSuccessmsg] = useState(null);
 
-  // const [useruid, setUseruid] = useState('');
   const handleSignup = () => {
+    // Add user sign up validation
     if (password != cpassword) {
       setCustomError("Password doesn't match");
       return;
@@ -333,7 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: windowWidth,
     alignItems: "center",
-    marginTop: windowHeight * 0.05,
+    marginTop: windowHeight * 0.02,
   },
   container1: {
     flex: 1,

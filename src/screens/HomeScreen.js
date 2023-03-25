@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../globals/style";
 
 import BottomNav from "../components/BottomNav";
+import AnimationSlider from "../components/Slider/AnimationSlider";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -39,6 +40,7 @@ const HomeScreen = ({ navigation }) => {
             }}
           />
         </View>
+        <AnimationSlider />
       </ScrollView>
     </View>
   );
