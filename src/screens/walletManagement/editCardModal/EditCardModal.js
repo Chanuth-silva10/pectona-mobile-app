@@ -10,12 +10,15 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { firebase } from "../../../../Firebase/firebaseConfig";
 import { useState } from "react";
+import Lottie from "lottie-react-native";
 
 const EditCardModal = ({ item, isOpen, onClose, getData, setIsLoading }) => {
   const [cardNumber, setCardNumber] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
   const [expiryMonth, setExpiryMonth] = useState(12);
   const [expiryYear, setExpiryYear] = useState(1999);
   const [cvn, setCVN] = useState(123);
+  const [isEditing, setIsEditing] = useState(false);
   const editWallet = async () => {
     setIsLoading(true);
     const db = firebase.firestore().collection("CardWallet").doc(item.id);
@@ -23,6 +26,7 @@ const EditCardModal = ({ item, isOpen, onClose, getData, setIsLoading }) => {
       id: new Date(),
       cardType: "Debit",
       cardNumber: cardNumber,
+      cardHolderName: cardHolderName,
       expiryMonth: expiryMonth,
       expiryYear: expiryYear,
       cvn: cvn,
@@ -42,76 +46,149 @@ const EditCardModal = ({ item, isOpen, onClose, getData, setIsLoading }) => {
       onRequestClose={onClose}
       style={styles.modalContainer}
     >
-      <View style={styles.mainContainer}>
-        <View>
-          <View style={styles.topContainer}>
-            <Pressable onPress={onClose}>
-              <AntDesign name="left" size={25} color="black" />
-            </Pressable>
-            <Text style={styles.header}>Edit Card Details</Text>
-          </View>
-          <View style={styles.topicContainer}>
-            <Text style={styles.topic}>Payment Details</Text>
-          </View>
-          <View style={styles.contentContainer}>
-            <View>
-              <Text style={styles.fieldHeader}>Card Number</Text>
-              <TextInput
-                placeholder="Card Number"
-                style={styles.cardNumberInput}
-                keyboardType={"numeric"}
-                maxLength={8}
-                defaultValue={item.cardNumber}
-                onChangeText={(value) => setCardNumber(value)}
-              />
+      {isEditing ? (
+        <View style={styles.mainContainer}>
+          <View>
+            <View style={styles.topContainer}>
+              <Pressable onPress={onClose}>
+                <AntDesign name="left" size={25} color="black" />
+              </Pressable>
+              <Text style={styles.header}>Edit Card Details</Text>
             </View>
-            <View style={styles.expiryContainer}>
+            <View style={styles.topicContainer}>
+              <Text style={styles.topic}>Payment Details</Text>
+            </View>
+            <View style={styles.contentContainer}>
               <View>
-                <Text style={styles.fieldHeader}>Expiry Month</Text>
+                <Text style={styles.fieldHeader}>Card Number</Text>
                 <TextInput
-                  placeholder="Expiry Month"
-                  style={styles.expiryDate}
+                  placeholder={item.cardNumber}
+                  style={styles.cardNumberInput}
                   keyboardType={"numeric"}
-                  maxLength={2}
-                  onChangeText={(value) => setExpiryMonth(value)}
+                  maxLength={8}
+                  onChangeText={(value) => setCardNumber(value)}
                 />
               </View>
               <View>
-                <Text style={styles.fieldHeader}>Expiry Year</Text>
+                <Text style={styles.fieldHeader}>Card Holder</Text>
                 <TextInput
-                  placeholder="Expiry Year"
-                  style={styles.expiryDate}
+                  placeholder="Name"
+                  style={styles.cardNumberInput}
+                  onChangeText={(value) => setCardHolderName(value)}
+                />
+              </View>
+              <View style={styles.expiryContainer}>
+                <View>
+                  <Text style={styles.fieldHeader}>Expiry Month</Text>
+                  <TextInput
+                    placeholder="Expiry Month"
+                    style={styles.expiryDate}
+                    keyboardType={"numeric"}
+                    maxLength={2}
+                    onChangeText={(value) => setExpiryMonth(value)}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.fieldHeader}>Expiry Year</Text>
+                  <TextInput
+                    placeholder="Expiry Year"
+                    style={styles.expiryDate}
+                    keyboardType={"numeric"}
+                    maxLength={4}
+                    onChangeText={(value) => setExpiryYear(value)}
+                  />
+                </View>
+              </View>
+              <View>
+                <Text style={styles.fieldHeader}>CVN</Text>
+                <Text style={styles.fieldDescription}>
+                  This code is a three or four digit number printed on the back
+                  or front of credit cards.
+                </Text>
+                <TextInput
+                  placeholder="CVN"
+                  style={styles.cvn}
                   keyboardType={"numeric"}
                   maxLength={4}
-                  onChangeText={(value) => setExpiryYear(value)}
+                  onChangeText={(value) => setCVN(value)}
                 />
               </View>
             </View>
-            <View>
-              <Text style={styles.fieldHeader}>CVN</Text>
-              <Text style={styles.fieldDescription}>
-                This code is a three or four digit number printed on the back or
-                front of credit cards.
-              </Text>
-              <TextInput
-                placeholder="CVN"
-                style={styles.cvn}
-                keyboardType={"numeric"}
-                maxLength={4}
-                onChangeText={(value) => setCVN(value)}
-              />
-            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Pressable
+              onPress={() => setIsEditing(false)}
+              style={styles.cancelButton}
+            >
+              <Text style={styles.cancelText}>Cancel</Text>
+            </Pressable>
+            <Pressable onPress={editWallet} style={styles.submitButton}>
+              <Text style={styles.submitText}>Submit</Text>
+            </Pressable>
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <Pressable onPress={onClose} style={styles.cancelButton}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </Pressable>
-          <Pressable onPress={editWallet} style={styles.submitButton}>
-            <Text style={styles.submitText}>Submit</Text>
-          </Pressable>
+      ) : (
+        <View style={styles.mainContainer}>
+          <View>
+            <View style={styles.topContainer}>
+              <Pressable onPress={onClose}>
+                <AntDesign name="left" size={25} color="black" />
+              </Pressable>
+              <Text style={styles.header}>Card Details</Text>
+            </View>
+            <View style={styles.topicContainer}>
+              <Text style={styles.topic}>Payment Details</Text>
+            </View>
+            <Lottie
+              source={require("../../../../assets/animation/crediCardView.json")}
+              autoPlay
+              loop
+              style={styles.lottie}
+            />
+            <View style={styles.contentDetailsContainer}>
+              <View style={styles.textContainer}>
+                <View>
+                  <Text style={styles.fieldHeader}>Card Number</Text>
+                  <Text>{item.cardNumber}</Text>
+                </View>
+                <View>
+                  <Text style={styles.fieldHeader}>Card Holder</Text>
+                  <Text>{item.cardHolderName}</Text>
+                </View>
+                <View>
+                  <Text style={styles.fieldHeader}>Card Type</Text>
+                  <Text>{item.cardType}</Text>
+                </View>
+                <View style={styles.expiryContainer}>
+                  <View>
+                    <Text style={styles.fieldHeader}>Expiry Month</Text>
+                    <Text>{item.expiryMonth}</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.fieldHeader}>Expiry Year</Text>
+                    <Text>{item.expiryYear}</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text style={styles.fieldHeader}>CVN</Text>
+                  <Text>{item.cvn}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Pressable onPress={onClose} style={styles.cancelButton}>
+              <Text style={styles.cancelText}>Cancel</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setIsEditing(true)}
+              style={styles.submitButton}
+            >
+              <Text style={styles.submitText}>Edit</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
+      )}
     </Modal>
   );
 };
@@ -139,8 +216,14 @@ const styles = StyleSheet.create({
     borderTopColor: "purple",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-
     marginTop: 10,
+  },
+  lottie: {
+    marginTop: -70,
+    marginHorizontal: 10,
+  },
+  textContainer: {
+    marginTop: 240,
   },
   topic: {
     fontSize: 18,
@@ -189,6 +272,10 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     paddingHorizontal: 10,
+  },
+  contentDetailsContainer: {
+    paddingHorizontal: 10,
+    alignItems: "center",
   },
   cancelButton: {
     borderColor: "red",

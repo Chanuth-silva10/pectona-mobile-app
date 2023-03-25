@@ -13,6 +13,7 @@ import { useState } from "react";
 
 const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
   const [cardNumber, setCardNumber] = useState(12345678);
+  const [cardHolderName, setCardHolderName] = useState("");
   const [expiryMonth, setExpiryMonth] = useState(12);
   const [expiryYear, setExpiryYear] = useState(1999);
   const [cvn, setCVN] = useState(123);
@@ -23,6 +24,7 @@ const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
       id: new Date(),
       cardType: "Debit",
       cardNumber: cardNumber,
+      cardHolderName: cardHolderName,
       expiryMonth: expiryMonth,
       expiryYear: expiryYear,
       cvn: cvn,
@@ -65,6 +67,14 @@ const AddCardModal = ({ isOpen, onClose, getData, setIsLoading }) => {
                 keyboardType={"numeric"}
                 maxLength={8}
                 onChangeText={(value) => setCardNumber(value)}
+              />
+            </View>
+            <View>
+              <Text style={styles.fieldHeader}>Card Holder</Text>
+              <TextInput
+                placeholder="Name"
+                style={styles.cardNumberInput}
+                onChangeText={(value) => setCardHolderName(value)}
               />
             </View>
             <View style={styles.expiryContainer}>
