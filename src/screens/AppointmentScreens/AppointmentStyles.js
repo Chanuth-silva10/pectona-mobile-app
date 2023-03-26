@@ -66,6 +66,17 @@ export const appointmentStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    createbuttonContainer:{
+        width: '80%',
+        height: 50,
+        backgroundColor: '#694fad',
+        borderRadius: 10,  
+        justifyContent: 'center',
+        elevation: 10,
+        color: 'white',
+        margin: 10,
+        alignSelf: 'center',
+    },
     cancelbuttonContainer: {
         marginTop: 30,
         marginLeft: 30,
@@ -76,6 +87,13 @@ export const appointmentStyles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginBottom: 40
+    },
+    btntxt: {
+        fontSize: 20,
+        fontWeight: "400",
+        color: "white",
+        textAlign: "center",
+        padding: 10,
     },
     iconContainer: {
         marginLeft: 50,

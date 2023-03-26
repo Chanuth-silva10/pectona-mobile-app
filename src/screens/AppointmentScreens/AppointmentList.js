@@ -57,7 +57,7 @@ const AppointmentList = ({ navigation }) => {
   const [id, setID] = useState([]);
 
   const getDoctors = async () => {
-    const docRef = await firebase.firestore().collection("UserData");
+    const docRef = firebase.firestore().collection("UserData");
 
     docRef.onSnapshot((snapshot) => {
       setDoctordata(snapshot.docs.map((doc) => doc.data()));
@@ -78,7 +78,7 @@ const AppointmentList = ({ navigation }) => {
 
 
   const getPets = async () => {
-    const docRef = await firebase.firestore().collection("PetData");
+    const docRef = firebase.firestore().collection("PetData");
 
     docRef.onSnapshot((snapshot) => {
       setPetdata(snapshot.docs.map((doc) => doc.data()));
@@ -97,7 +97,7 @@ const AppointmentList = ({ navigation }) => {
   };
 
   const getAppointments = async () => {
-    const appointmentsRef = await firebase.firestore().collection("AppointmentData")
+    const appointmentsRef = firebase.firestore().collection("AppointmentData")
     appointmentsRef.onSnapshot((snapshot) => {
       setAppointmentData(snapshot.docs.map((doc) => doc.data()));
       snapshot.docs.map((doc) => doc.id)
@@ -158,7 +158,7 @@ const AppointmentList = ({ navigation }) => {
       <ScrollView style={appointmentStyles.containerin}>
       {loggeduserid == "sEPcC2qC6gTXZWG7Qm8z1u3oX1x1" ? 
           <><Text style={appointmentStyles.head1}>
-            Hello {userdata.name}
+            Hello user,
           </Text><Text style={appointmentStyles.para}>
               You have the following appointments:
             </Text></>
@@ -186,8 +186,8 @@ const AppointmentList = ({ navigation }) => {
                 <View key={index}>
                   <HStack m={2} spacing={80} >
                     <View>
-                      <Text style={appointmentStyles.lable}>Doctor - { doc.label }  </Text>
-                      <Text style={appointmentStyles.lable}>Pet - { pet.label }</Text>
+                      <Text style={appointmentStyles.lable}>Doctor - { appointment.doctorid }  </Text>
+                      <Text style={appointmentStyles.lable}>Pet - { appointment.petid }</Text>
                       <Text style={appointmentStyles.lable}>Date - {appointment.date}</Text>
                       
                     </View>
@@ -211,14 +211,12 @@ const AppointmentList = ({ navigation }) => {
           })
         }
 
-<View style={appointmentStyles.editbuttonContainer}>
-            <Button
-              title="Make an appointment"
-              color="#917DCA"
-              onPress={() => navigation.navigate('make_appointment')}
-            >
-            </Button>
+          <View style={appointmentStyles.editbuttonContainer}>
+            <TouchableOpacity style={appointmentStyles.createbuttonContainer} onPress={() => navigation.navigate('make_appointment')}>
+              <Text style={appointmentStyles.btntxt}>Make an appointment</Text>
+            </TouchableOpacity>
           </View>
+          
       </ScrollView>
     </View>
   );
