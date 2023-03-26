@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import HomeHeadNav from "../../components/HomeHeadNav";
@@ -130,23 +130,18 @@ const Appointments = ({ navigation }) => {
         <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please select a pet</Text>
 
         <TextInput variant="outlined" placeholder="Enter appointment date" style={appointmentStyles.inputContainer} onChange={handleDate}></TextInput>
-        <Text variant='subtitle 2' style={appointmentStyles.textLableContainerLast}>Please enter the appointment date</Text>
+        <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please enter the appointment date</Text>
 
         <View style={appointmentStyles.cancelbuttonContainer}>
-          <Button
-            title="Cancel"
-            color="#B6B3B3"
-            onPress={() => navigation.navigate('appointments')}
-          >
-          </Button>
+          <TouchableOpacity style={appointmentStyles.cancelbtn} onPress={() => navigation.navigate('appointments')}>
+            <Text style={appointmentStyles.btntxt}>Cancel</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={appointmentStyles.editbuttonContainer}>
-          <Button
-            title="Submit"
-            onPress={handleSubmit}
-          >
-          </Button>
+          <TouchableOpacity style={appointmentStyles.sumitbtn} onPress={handleSubmit}>
+            <Text style={appointmentStyles.btntxt}>Submit</Text>
+          </TouchableOpacity>
         </View>
 
       </ScrollView>
