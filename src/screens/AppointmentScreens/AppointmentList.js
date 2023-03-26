@@ -10,10 +10,19 @@ import Card from "../../components/Card/Card";
 import { HStack } from '@react-native-material/core';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+
 const AppointmentList = ({ navigation }) => {
 
   const [loggeduserid, setLoggeduserid] = useState(null);
   const [userdata, setUserdata] = useState(null);
+
+  const [doctordata, setDoctordata] = useState([]);
+  const [doctorid, setDoctorid] = useState([]);
+  const [data, setdata] = useState([]);
+
+  const [petdata, setPetdata] = useState([]);
+  const [petid, setPetid] = useState([]);
+  const [pdata, setpdata] = useState([]);
 
   useEffect(() => {
     const checklogin = () => {
@@ -43,34 +52,66 @@ const AppointmentList = ({ navigation }) => {
     }
   };
 
-  console.log(userdata);
 
   const [appointmentData, setAppointmentData] = useState([]);
-  const [id, setID] = useState(null);
+  const [id, setID] = useState([]);
 
-  const getAppointments = async () => {
-    const appointmentsRef = firebase.firestore().collection("AppointmentData")
-    appointmentsRef.onSnapshot((snapshot) => {
-      setAppointmentData(snapshot.docs.map((doc) => doc.data()));
-      setID(snapshot.docs.map((doc) => doc.id));
+  const getDoctors = async () => {
+    const docRef = await firebase.firestore().collection("UserData");
+
+    docRef.onSnapshot((snapshot) => {
+      setDoctordata(snapshot.docs.map((doc) => doc.data()));
+
+      doctordata.map((doctor) => {
+        console.log(doctor.uid);
+        let DData = { 
+          label: doctor.name, value: doctor.uid
+        };
+        console.log(DData);
+        data.push(DData);
+      }
+      
+    );
+    setDoctorid(data);
     });
   };
 
-  const getPetDetails = async (id) => {
-    const petRef = firebase.firestore().collection("PettData").where("name", "==", id)
-    petRef.onSnapshot((snapshot) => {
-      return snapshot.docs.map((doc) => doc.data());
-      //setAppointmentData(snapshot.docs.map((doc) => doc.data()));
-      //setID(snapshot.docs.map((doc) => doc.id));
+
+  const getPets = async () => {
+    const docRef = await firebase.firestore().collection("PetData");
+
+    docRef.onSnapshot((snapshot) => {
+      setPetdata(snapshot.docs.map((doc) => doc.data()));
+
+      petdata.map((pet) => {
+        let ItemData = { 
+          label: pet.name, value: pet.petid
+        };
+        //console.log(ItemData);
+        pdata.push(ItemData);
+      }
+      
+    );
+    setPetid(pdata);
+    });
+  };
+
+  const getAppointments = async () => {
+    const appointmentsRef = await firebase.firestore().collection("AppointmentData")
+    appointmentsRef.onSnapshot((snapshot) => {
+      setAppointmentData(snapshot.docs.map((doc) => doc.data()));
+      snapshot.docs.map((doc) => doc.id)
     });
   };
 
   console.log("Appointment id", id);
 
   useEffect(() => {
+    getDoctors();
+    getPets();
     getAppointments();
     getuserdata();
-  }, [loggeduserid]);
+  },[doctorid], [petid], [loggeduserid]);
 
   const showConfirmDialog = (id) => {
     return Alert.alert(
@@ -89,6 +130,8 @@ const AppointmentList = ({ navigation }) => {
       ]
     );
   };
+
+  
 
   const deleteItem = (id) => {
     firebase
@@ -115,7 +158,7 @@ const AppointmentList = ({ navigation }) => {
       <ScrollView style={appointmentStyles.containerin}>
       {loggeduserid == "sEPcC2qC6gTXZWG7Qm8z1u3oX1x1" ? 
           <><Text style={appointmentStyles.head1}>
-            Hello Piyo
+            Hello {userdata.name}
           </Text><Text style={appointmentStyles.para}>
               You have the following appointments:
             </Text></>
@@ -124,7 +167,15 @@ const AppointmentList = ({ navigation }) => {
 
         {
           appointmentData.map((appointment, index) => {
+            console.log(appointment.doctorid);
+            console.log(appointment.petid);
 
+            const doc = data.find(dt => dt.value == appointment.doctorid);
+            const pet = pdata.find(dt => dt.value == appointment.petid);
+
+            //console.log("ddata: " + doc.value)
+            //console.log("pdata: " + pet.value)
+           
             return (
 
               appointment.userid == loggeduserid ?
@@ -135,9 +186,10 @@ const AppointmentList = ({ navigation }) => {
                 <View key={index}>
                   <HStack m={2} spacing={80} >
                     <View>
-                      <Text style={appointmentStyles.lable}>Doctor - {appointment.doctorid}</Text>
-                      <Text style={appointmentStyles.lable}>Pet - {appointment.petid}</Text>
+                      <Text style={appointmentStyles.lable}>Doctor - { doc.label }  </Text>
+                      <Text style={appointmentStyles.lable}>Pet - { pet.label }</Text>
                       <Text style={appointmentStyles.lable}>Date - {appointment.date}</Text>
+                      
                     </View>
                     <View style={appointmentStyles.iconContainer}>
                       <HStack m={2} spacing={5}>

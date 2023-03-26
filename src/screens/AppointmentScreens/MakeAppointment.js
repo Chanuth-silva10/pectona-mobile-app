@@ -20,6 +20,9 @@ const Appointments = ({ navigation }) => {
   const [doctordata, setDoctordata] = useState([]);
   const [petdata, setPetdata] = useState([]);
 
+  const [data, setdata] = useState([]);
+  const [pdata, setpdata] = useState([]);
+
   useEffect(() => {
     const checklogin = () => {
       firebase.auth().onAuthStateChanged((user) => {
@@ -39,24 +42,37 @@ const Appointments = ({ navigation }) => {
 
   const getDoctors = async () => {
     const docRef = firebase.firestore().collection("UserData")
-    //console.log ("docRef: " + docRef.size());
     docRef.onSnapshot((snapshot) => {
       setDoctordata(snapshot.docs.map((doc) => doc.data()));
+
+      doctordata.map((doctor) => {
+        let DData = { 
+          label: doctor.name, value: doctor.uid
+        };
+        data.push(DData);
+      });
     });
+    
   };
 
   console.log("doctorname: " + doctordata.map((doctor, index) => {return (doctor.name)}));
 
   const getPets = async () => {
     const petsRef = firebase.firestore().collection("PetData");
-    //console.log ("petsRef: " + petsRef.size());
     petsRef.onSnapshot((snapshot) => {
       setPetdata(snapshot.docs.map((doc) => doc.data()));
-      setPetname(snapshot.docs.map((doc) => doc.id));
+
+      petdata.map((pet) => {
+        let ItemData = { 
+          label: pet.name, value: pet.petid
+        };
+        pdata.push(ItemData);
+      });
     });
+
   };
 
-  console.log("petname: " + petdata.map((pet, index) => {return (pet.petid)}));
+  console.log("petname: " + petdata.map((pet, index) => {return (pet.name)}));
 
   const handleDoctor = (e) => {
     setDoctorid(e.nativeEvent.text)
@@ -106,18 +122,12 @@ const Appointments = ({ navigation }) => {
         <Text style={appointmentStyles.head1}>
           Make an Appointment
         </Text>
-
-        <DropDown data={doctors} disable={true} onChange={handleDoctor} setValue={setDoctorid} />
+        
+        <DropDown data={data} disable={true} onChange={handleDoctor} setValue={setDoctorid} />
         <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please select a doctor</Text>
 
-        <DropDown data={pets} disable={true} onChange={handlePet} setValue={setPetid} />
+        <DropDown data={pdata} disable={true} onChange={handlePet} setValue={setPetid} />
         <Text variant='subtitle 2' style={appointmentStyles.textLableContainer}>Please select a pet</Text>
-
-        <TextInput variant="outlined" placeholder="Enter doctor id" style={appointmentStyles.inputContainer} onChange={handleDoctor}></TextInput>
-        <Text variant='subtitle 2' style={appointmentStyles.textLableContainerLast}>Please enter doctor id</Text>
-        
-        <TextInput variant="outlined" placeholder="Enter pet id" style={appointmentStyles.inputContainer} onChange={handlePet}></TextInput>
-        <Text variant='subtitle 2' style={appointmentStyles.textLableContainerLast}>Please enter pet id</Text>
 
         <TextInput variant="outlined" placeholder="Enter appointment date" style={appointmentStyles.inputContainer} onChange={handleDate}></TextInput>
         <Text variant='subtitle 2' style={appointmentStyles.textLableContainerLast}>Please enter the appointment date</Text>
